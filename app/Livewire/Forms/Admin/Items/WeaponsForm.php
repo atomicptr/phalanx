@@ -7,7 +7,10 @@ use App\Enums\WeaponType;
 use App\Models\Patch;
 use App\Models\Weapon;
 use App\Models\WeaponAbility;
+use Atomicptr\Functional\Lst;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
 
 class WeaponsForm extends Form
@@ -21,8 +24,7 @@ class WeaponsForm extends Form
 
     public ?string $description = null;
 
-    #[Validate('image|max:1024')]
-    public mixed $icon = null;
+    public TemporaryUploadedFile|string|null $icon = null;
 
     public Element $element = Element::NEUTRAL;
 
@@ -59,10 +61,15 @@ class WeaponsForm extends Form
 
     protected function grabFormData(): array
     {
+        $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
+        $this->icon = $this->icon->storeAs(path: 'uploads/icons/weapons', name: Str::slug($this->name).$ext);
+
         return [
             ...$this->only([
                 'name',
                 'type',
+                'description',
+                'icon',
                 'element',
                 'behemoth',
                 'patch',

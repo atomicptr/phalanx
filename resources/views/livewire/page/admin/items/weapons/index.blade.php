@@ -23,7 +23,7 @@
                         <td>
                             <div class="avatar">
                                 <div class="mask mask-squircle h-12 w-12">
-                                    <img src="https://cdn.jsdelivr.net/gh/atomicptr/dauntless-builder/assets/icons/weapons/gnasher/RagingBlade.png?build=1725555024279" />
+                                    <img src="{{ asset($weapon->icon) }}" />
                                 </div>
                             </div>
                         </td>
