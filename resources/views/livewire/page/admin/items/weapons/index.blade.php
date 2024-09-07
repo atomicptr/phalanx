@@ -14,6 +14,7 @@
                 <tr>
                     <th width="32">{{ __("Icon") }}</th>
                     <th>{{ __("Name") }}</th>
+                    <th>{{ __("Type") }}
                     <th width="32"></th>
                 </tr>
             </thead>
@@ -31,6 +32,9 @@
                             <a href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" class="font-bold">
                                 {{ $weapon->name }}
                             </a>
+                        </td>
+                        <td>
+                            {{ $weapon->type->displayString() }}
                         </td>
                         <td>
                             <div class="join">
