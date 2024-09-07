@@ -28,7 +28,7 @@
                             </div>
                         </td>
                         <td>
-                            <a href="" class="font-bold">
+                            <a href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" class="font-bold">
                                 {{ $weapon->name }}
                             </a>
                         </td>

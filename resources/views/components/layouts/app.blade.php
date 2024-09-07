@@ -88,31 +88,31 @@
                     <ul>
                         <li>
                             <a class="disabled">
-                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                <img src="{{ asset("icons/omnicell.png") }}" class="w-6 h-6" />
                                 {{ __("Omnicells") }}
                             </a>
                         </li>
                         <li>
                             <a href="{{ route("admin.items.weapons")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.weapons") }}">
-                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                <img src="{{ asset("icons/weapons.png") }}" class="w-6 h-6" />
                                 {{ __("Weapons") }}
                             </a>
                         </li>
                         <li>
                             <a class="disabled">
-                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                <img src="{{ asset("icons/torso.png") }}" class="w-6 h-6" />
                                 {{ __("Armours") }}
                             </a>
                         </li>
                         <li>
                             <a class="disabled">
-                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
                                 {{ __("Lanterns") }}
                             </a>
                         </li>
                         <li>
                             <a class="disabled">
-                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                <img src="{{ asset("icons/prismatic.png") }}" class="w-6 h-6" />
                                 {{ __("Cells") }}
                             </a>
                         </li>
@@ -126,7 +126,7 @@
                     <ul>
                         <li>
                             <a class="disabled">
-                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                <img src="{{ asset("icons/brutality.png") }}" class="w-6 h-6" />
                                 {{ __("Perks") }}
                             </a>
                         </li>
