@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
@@ -8,10 +8,10 @@ use Livewire\Component;
 
 class Login extends Component
 {
-    #[Validate("required|email")]
+    #[Validate('required|email')]
     public string $email;
 
-    #[Validate("required")]
+    #[Validate('required')]
     public string $password;
 
     public function login()
@@ -19,19 +19,19 @@ class Login extends Component
         $this->validate();
 
         $credentials = [
-            "email" => $this->email,
-            "password" => $this->password,
+            'email' => $this->email,
+            'password' => $this->password,
         ];
 
         if (Auth::attempt($credentials)) {
-            return $this->redirectRoute("admin.index", navigate: true);
+            return $this->redirectRoute('admin.index', navigate: true);
         }
 
-        session()->flash("error", "Invalid credentials!");
+        session()->flash('error', 'Invalid credentials!');
     }
-    
+
     public function render()
     {
-        return view('livewire.login');
+        return view('livewire.auth.login');
     }
 }

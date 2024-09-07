@@ -44,4 +44,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function gravatarUrl(): string
+    {
+        $hash = hash('md5', $this->email);
+
+        return "https://gravatar.com/avatar/$hash?s=200&r=pg&d=identicon";
+    }
 }

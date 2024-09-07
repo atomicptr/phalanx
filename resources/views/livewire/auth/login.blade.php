@@ -2,9 +2,7 @@
     <form wire:submit="login">
         <div class="card w-full max-w-sm shadow-xl bg-base-100">
             <div class="card-body">
-                <h2 class="text-center text-2xl font-bold mb-4">
-                    {{ Config::get("app.name") }}
-                </h2>
+                <x-navbar-logo />
 
                 @if (session()->has("error"))
                     <div role="alert" class="alert alert-error mb-4">
@@ -18,7 +16,7 @@
                 <div class="form-control w-full max-w-xs">
                     <label class="input input-bordered flex items-center gap-2 {{ $errors->has("email") ? "input-error" : "" }}">
                         <x-heroicon-o-envelope class="w-4 h-4" />
-                        <input wire:model="email" type="text" class="grow" placeholder="E-Mail" />
+                        <input wire:model="email" type="text" class="grow" placeholder="{{ __("E-Mail") }}" :value="old('email')" />
                     </label>
 
                     @if ($errors->has("email"))
@@ -33,7 +31,7 @@
                 <div class="form-control w-full max-w-xs">
                     <label class="input input-bordered flex items-center gap-2 {{ $errors->has("password") ? "input-error" : "" }}">
                         <x-heroicon-o-key class="w-4 h-4" />
-                        <input wire:model="password" type="password" class="grow" placeholder="Password" />
+                        <input wire:model="password" type="password" class="grow" placeholder="{{ __("Password") }}" />
                     </label>
 
                     @if ($errors->has("password"))
@@ -46,7 +44,7 @@
                 </div>
 
                 <div class="form-control mt-6">
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-primary">{{ __("Login") }}</button>
                 </div>
             </div>
         </div>
