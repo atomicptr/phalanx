@@ -8,6 +8,6 @@ class RouteUtil
 {
     public static function active(string $name): string
     {
-        return Route::currentRouteName() === $name ? 'active' : '';
+        return str_starts_with(Route::currentRouteName(), $name) ? 'active' : '';
     }
 }

@@ -1,23 +1,31 @@
 <?php
 
-use App\Http\Controllers\Admin\IndexController;
-use App\Http\Controllers\Admin\ItemData\WeaponsController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Livewire\Page\Admin\Dashboard;
+use App\Livewire\Page\Admin\Items\Weapons;
+use App\Livewire\Page\Admin\Patch;
+use App\Livewire\Page\Login;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect(route('admin.index')));
 
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/login', Login::class)->name('login');
+Route::get('/logout', function () {
+    Auth::logout();
+
+    return redirect(route('login'));
+})->name('logout');
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
-    Route::get('/admin', [IndexController::class, 'index'])->name('admin.index');
+    Route::get('/admin', Dashboard::class)->name('admin.index');
+
+    // administration
+    Route::get('/admin/patch', Patch\Index::class)->name('admin.patch');
+    Route::get('/admin/patch/new', Patch\Create::class)->name('admin.patch.new');
+    Route::get('/admin/patch/{patch:name}', Patch\Edit::class)->name('admin.patch.edit');
 
     // items data
-    // Route::get("/admin/items/omnicellss", [OmnicellssController::class, "index"])->name("admin.items.omnicellss");
-    Route::get('/admin/items/weapons', [WeaponsController::class, 'index'])->name('admin.items.weapons');
-    // Route::get("/admin/items/armours", [ArmoursController::class, "index"])->name("admin.items.armours");
-    // Route::get("/admin/items/lanterns", [LanternsController::class, "index"])->name("admin.items.lanterns");
-    // Route::get("/admin/items/perks", [PerksController::class, "index"])->name("admin.items.perks");
-    // Route::get("/admin/items/cells", [CellsController::class, "index"])->name("admin.items.cells");
+    Route::get('/admin/items/weapons', Weapons\Index::class)->name('admin.items.weapons');
+    Route::get('/admin/items/weapons/new', Weapons\Create::class)->name('admin.items.weapons.new');
+    Route::get('/admin/items/weapons/{weapon}', Weapons\Edit::class)->name('admin.items.weapons.edit');
 });

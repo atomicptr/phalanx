@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0e6fe5ac1f50b41df426960ec372af5",
+    "content-hash": "fdcbd3cb0f903aa6378e373816ae5f4c",
     "packages": [
+        {
+            "name": "atomicptr/functional",
+            "version": "v0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/atomicptr/php-functional.git",
+                "reference": "1d3f0615cd0f1e1d7452efc15bb80d8fd5da6fb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/atomicptr/php-functional/zipball/1d3f0615cd0f1e1d7452efc15bb80d8fd5da6fb7",
+                "reference": "1d3f0615cd0f1e1d7452efc15bb80d8fd5da6fb7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "require-dev": {
+                "clean/phpdoc-md": "^0.19.3",
+                "laravel/pint": "^1.17",
+                "pestphp/pest": "^2.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Atomicptr\\Functional\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Kaster",
+                    "email": "me@atomicptr.de"
+                }
+            ],
+            "description": "A set of tools to enable a more functional style of programming in PHP, inspired by OCaml",
+            "support": {
+                "issues": "https://github.com/atomicptr/php-functional/issues",
+                "source": "https://github.com/atomicptr/php-functional/tree/v0.7.0"
+            },
+            "time": "2024-08-12T13:36:38+00:00"
+        },
         {
             "name": "blade-ui-kit/blade-heroicons",
             "version": "2.4.0",

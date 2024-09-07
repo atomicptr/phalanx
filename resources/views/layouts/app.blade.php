@@ -24,7 +24,7 @@
                     </div>
                     <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li>
-                            <a>
+                            <a class="disabled">
                                 {{ __("Settings") }}
                             </a>
                         </li>
@@ -55,7 +55,7 @@
                 <div class="w-full block lg:hidden" style="height: 68px !important;"></div>
 
                 <li>
-                    <a>
+                    <a href="{{ route("admin.index") }}">
                         <x-heroicon-o-home class="w-6 h-6" />
                         {{ __("Home") }}
                     </a>
@@ -67,7 +67,7 @@
                     </h2>
                     <ul>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-users class="w-6 h-6" />
                                 {{ __("Users") }}
                             </a>
@@ -87,7 +87,7 @@
                     </h2>
                     <ul>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Omnicells") }}
                             </a>
@@ -99,19 +99,19 @@
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Armours") }}
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Lanterns") }}
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Cells") }}
                             </a>
@@ -125,13 +125,13 @@
                     </h2>
                     <ul>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Perks") }}
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Behemoths") }}
                             </a>
