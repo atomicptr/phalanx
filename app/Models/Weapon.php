@@ -27,6 +27,7 @@ class Weapon extends Model
         'activeName',
         'activeDescription',
         'activeValues',
+        'talents',
         'patch',
     ];
 
@@ -38,6 +39,7 @@ class Weapon extends Model
             'specialValues' => 'array',
             'passiveValues' => 'array',
             'activeValues' => 'array',
+            'talents' => 'array',
         ];
     }
 

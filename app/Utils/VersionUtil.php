@@ -6,7 +6,7 @@ class VersionUtil
 {
     public static function isValid(string $version): bool
     {
-        $res = preg_match("/^([1-9]+[0-9]*)\.([1-9]+[0-9]*)\.([1-9]+[0-9]*)$/", $version);
+        $res = preg_match("/^([0-9]+)\.([0-9]+)\.([0-9]+)$/", $version);
 
         return $res !== false && $res > 0;
     }

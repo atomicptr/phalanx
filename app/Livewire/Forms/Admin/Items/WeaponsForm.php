@@ -3,7 +3,9 @@
 namespace App\Livewire\Forms\Admin\Items;
 
 use App\Enums\Element;
+use App\Enums\Stat;
 use App\Enums\ValueType;
+use App\Enums\WeaponTalentOptionType;
 use App\Enums\WeaponType;
 use App\Models\Patch;
 use App\Models\Weapon;
@@ -47,6 +49,8 @@ class WeaponsForm extends Form
 
     public ?array $activeValues = [];
 
+    public ?array $talents = [];
+
     public ?int $behemoth = null;
 
     public int $patch;
@@ -62,6 +66,7 @@ class WeaponsForm extends Form
             'specialDescription' => new ContainsValuesRule($this->specialValues),
             'passiveDescription' => new ContainsValuesRule($this->passiveValues),
             'activeDescription' => new ContainsValuesRule($this->activeValues),
+            // TODO: validate talents
         ];
     }
 
@@ -83,17 +88,19 @@ class WeaponsForm extends Form
         $this->activeName = $weapon->activeName;
         $this->activeDescription = $weapon->activeDescription;
         $this->activeValues = $this->prepareValues($weapon->activeValues);
+        $this->talents = $this->prepareTalents($weapon->talents);
         $this->behemoth = $weapon->behemoth;
         $this->patch = $weapon->patch;
     }
 
-    private function prepareValues(?array $values)
+    private function prepareValues(?array $values): array
     {
         return Lst::map(
             fn (array $value) => [...$value, 'type' => ValueType::from($value['type'])],
             Lst::map(
                 fn (array $value) => array_merge(
                     [
+                        'id' => (string) Str::uuid(),
                         'name' => '',
                         'value' => '',
                         'type' => ValueType::CUSTOM,
@@ -103,6 +110,63 @@ class WeaponsForm extends Form
                 $values
             )
         );
+    }
+
+    private function prepareTalents(?array $talents): array
+    {
+        $newTalents = [];
+
+        foreach ($talents ?? [] as $index => $talent) {
+            $newTalents[$index] = array_merge(
+                [
+                    'id' => (string) Str::uuid(),
+                    'name' => '',
+                    'options' => [],
+                ],
+                $talent,
+            );
+
+            foreach ($talent['options'] ?? [] as $optionIndex => $option) {
+                if (! ($option['type'] instanceof WeaponTalentOptionType)) {
+                    $option['type'] = WeaponTalentOptionType::from($option['type']);
+                }
+
+                switch ($option['type']) {
+                    case WeaponTalentOptionType::CUSTOM:
+                        $option = array_merge(
+                            [
+                                'id' => (string) Str::uuid(),
+                                'name' => '',
+                                'type' => WeaponTalentOptionType::CUSTOM,
+                                'values' => [],
+                            ],
+                            $option,
+                        );
+                        $option['values'] = $this->prepareValues($option['values']);
+                        break;
+                    case WeaponTalentOptionType::STAT:
+                        $option = array_merge(
+                            [
+                                'id' => (string) Str::uuid(),
+                                'name' => '',
+                                'type' => WeaponTalentOptionType::STAT,
+                                'stat' => Stat::MIGHT,
+                                'value' => 0,
+                            ],
+                            $option,
+                        );
+
+                        if (! ($option['stat'] instanceof Stat)) {
+                            $option['stat'] = Stat::from($option['stat']);
+                        }
+                        break;
+                }
+
+                $newTalents[$index]['options'][$optionIndex] = $option;
+            }
+        }
+
+        return array_values($newTalents);
     }
 
     protected function grabFormData(): array
@@ -117,6 +181,8 @@ class WeaponsForm extends Form
         $this->specialValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->specialValues);
         $this->passiveValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->passiveValues);
         $this->activeValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->activeValues);
+
+        // TODO: clean up talents
 
         return $this->all();
     }
@@ -135,7 +201,7 @@ class WeaponsForm extends Form
 
     public function addSpecialValue()
     {
-        $this->specialValues[] = ['name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->specialValues[] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
     }
 
     public function deleteSpecial(int $index)
@@ -145,7 +211,7 @@ class WeaponsForm extends Form
 
     public function addPassiveValue()
     {
-        $this->passiveValues[] = ['name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->passiveValues[] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
     }
 
     public function deletePassive(int $index)
@@ -155,11 +221,41 @@ class WeaponsForm extends Form
 
     public function addActiveValue()
     {
-        $this->activeValues[] = ['name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->activeValues[] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
     }
 
     public function deleteActive(int $index)
     {
         $this->activeValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->activeValues);
+    }
+
+    public function addTalent(): void
+    {
+        assert(count($this->talents) < 5);
+        $this->talents[] = ['id' => (string) Str::uuid(), 'name' => '', 'options' => []];
+    }
+
+    public function addOption(int $index): void
+    {
+        assert(count($this->talents[$index]['options']) < 5);
+        $this->talents[$index]['options'][] = ['id' => (string) Str::uuid(), 'type' => WeaponTalentOptionType::CUSTOM];
+    }
+
+    public function deleteOption(int $index, int $optionIndex): void
+    {
+        $this->talents[$index]['options'] = Lst::filter(fn (array $val, int $idx) => $idx !== $optionIndex, $this->talents[$index]['options']);
+    }
+
+    public function addOptionValue(int $index, int $optionIndex): void
+    {
+        if (! array_key_exists('values', $this->talents[$index]['options'][$optionIndex])) {
+            $this->talents[$index]['options'][$optionIndex]['values'] = [];
+        }
+        $this->talents[$index]['options'][$optionIndex]['values'][] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+    }
+
+    public function deleteOptionValue(int $index, int $optionIndex, int $valueIndex): void
+    {
+        $this->talents[$index]['options'][$optionIndex]['values'] = Lst::filter(fn (array $val, int $idx) => $idx !== $valueIndex, $this->talents[$index]['options'][$optionIndex]['values']);
     }
 }

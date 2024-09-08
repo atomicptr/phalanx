@@ -10,6 +10,8 @@
     <x-form.weapon-ability label="Passive" type="passive" :values="$form->passiveValues" />
     <x-form.weapon-ability label="Active" type="active" :values="$form->activeValues" />
 
+    <x-form.weapon-talents label="Talents" :values="$form->talents" />
+
     <x-input.select label="Patch" fieldName="form.patch" :values="$patches" />
 
     <x-input.submit />

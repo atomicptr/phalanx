@@ -9,17 +9,12 @@
         <x-input.textfield label="Name" fieldName="form.{{ $type }}Name" />
         <x-input.textarea label="Description" fieldName="form.{{ $type }}Description" />
 
-        <div class="flex flex-row justify-between items-center max-w-lg my-4">
-            <div class="text-lg">
-                {{ __("Values") }}
-            </div>
-            <button class="btn btn-sm btn-ghost" type="button" wire:click="add{{ ucfirst($type) }}Value()">
-                <x-heroicon-o-plus class="w-6 h-6"/>
-            </button>
+        <div class="text-lg my-4">
+            {{ __("Values") }}
         </div>
 
         @foreach ($values as $index => $value)
-            <div class="card bg-base-200 shadow-xl my-4 max-w-lg" wire:key="form.{{ $type }}Values-{{ $index }}">
+            <div class="card bg-base-200 shadow-xl my-4 max-w-lg" wire:key="value-{{ $value['id'] }}">
                 <div class="card-body">
                     <x-input.textfield label="Name" fieldName="form.{{ $type }}Values.{{ $index }}.name" />
                     <x-input.select label="Type" fieldName="form.{{ $type }}Values.{{ $index }}.type" values="{{ \App\Enums\ValueType::class }}" />
@@ -38,5 +33,12 @@
                 </div>
             </div>
         @endforeach
+
+        <div class="flex flex-row w-full justify-center mt-4">
+            <button class="btn btn-sm btn-primary" type="button" wire:click="add{{ ucfirst($type) }}Value()">
+                <x-heroicon-o-plus class="w-6 h-6"/>
+                {{ __("Add Value") }}
+            </button>
+        </div>
     </div>
 </div>
