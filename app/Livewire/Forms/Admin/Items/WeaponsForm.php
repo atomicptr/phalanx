@@ -109,7 +109,9 @@ class WeaponsForm extends Form
     {
         if ($this->icon instanceof TemporaryUploadedFile) {
             $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
-            $this->icon = $this->icon->storeAs(path: 'uploads/icons/weapons', name: Str::slug($this->name).$ext);
+            $this->icon = $this->icon->storeAs(path: 'uploads/icons/weapons', name: Str::slug($this->name).$ext, options: [
+                'disk' => getenv('APP_UPLOAD_DISK', 'public'),
+            ]);
         }
 
         $this->specialValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->specialValues);
