@@ -15,7 +15,7 @@
                 @foreach ($patches as $patch)
                     <tr>
                         <td>
-                            <a href="{{ route("admin.patch.edit", ["patch" => $patch]) }}" class="font-bold">
+                            <a href="{{ route("admin.patch.edit", ["patch" => $patch]) }}" class="font-bold" wire:navigate>
                                 {{ $patch->name }}
                             </a>
                         </td>
@@ -27,7 +27,7 @@
                         </td>
                         <td>
                             <div class="join">
-                                <a class="btn join-item" href="{{ route("admin.patch.edit", ["patch" => $patch]) }}">
+                                <a class="btn join-item" href="{{ route("admin.patch.edit", ["patch" => $patch]) }}" wire:navigate>
                                     <x-heroicon-o-pencil class="w-6 h-6" />
                                 </a>
                                 <button class="btn join-item" wire:click="delete({{ $patch->id }})" wire:confirm="{{ __("Are you sure you want to delete this patch?")}}">
@@ -42,7 +42,7 @@
     </div>
 
     <div class="flex flex-row mt-8">
-        <a class="btn btn-primary" href="{{ route("admin.patch.new") }}">
+        <a class="btn btn-primary" href="{{ route("admin.patch.new") }}" wire:navigate>
             <x-heroicon-o-plus class="w-6 h-6" />
             {{ __("New") }}
         </a>

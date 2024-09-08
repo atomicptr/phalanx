@@ -4,7 +4,6 @@ use App\Enums\Element;
 use App\Enums\WeaponType;
 use App\Models\Behemoth;
 use App\Models\Patch;
-use App\Models\WeaponAbility;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,9 +24,18 @@ return new class extends Migration
             $table->string('icon')->nullable(true);
 
             $table->enum('element', Element::values());
-            $table->foreignIdFor(WeaponAbility::class, 'special')->nullable(true);
-            $table->foreignIdFor(WeaponAbility::class, 'passive')->nullable(true);
-            $table->foreignIdFor(WeaponAbility::class, 'active')->nullable(true);
+
+            $table->string('specialName')->nullable(true);
+            $table->text('specialDescription')->nullable(true);
+            $table->json('specialValues')->nullable(true);
+
+            $table->string('passiveName')->nullable(true);
+            $table->text('passiveDescription')->nullable(true);
+            $table->json('passiveValues')->nullable(true);
+
+            $table->string('activeName')->nullable(true);
+            $table->text('activeDescription')->nullable(true);
+            $table->json('activeValues')->nullable(true);
 
             $table->foreignIdFor(Behemoth::class, 'behemoth')->nullable(true);
 

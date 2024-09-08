@@ -55,7 +55,7 @@
                 <div class="w-full block lg:hidden" style="height: 68px !important;"></div>
 
                 <li>
-                    <a href="{{ route("admin.index") }}">
+                    <a href="{{ route("admin.index") }}" wire:navigate>
                         <x-heroicon-o-home class="w-6 h-6" />
                         {{ __("Home") }}
                     </a>
@@ -73,7 +73,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route("admin.patch")}}" class="{{ \App\Utils\RouteUtil::active("admin.patch") }}">
+                            <a href="{{ route("admin.patch")}}" class="{{ \App\Utils\RouteUtil::active("admin.patch") }}" wire:navigate>
                                 <x-heroicon-o-square-2-stack class="w-6 h-6" />
                                 {{ __("Patches") }}
                             </a>
@@ -93,7 +93,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route("admin.items.weapons")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.weapons") }}">
+                            <a href="{{ route("admin.items.weapons")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.weapons") }}" wire:navigate>
                                 <img src="{{ asset("icons/weapons.png") }}" class="w-6 h-6" />
                                 {{ __("Weapons") }}
                             </a>

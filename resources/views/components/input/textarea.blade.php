@@ -1,6 +1,6 @@
 @props(['label', 'fieldName'])
 
-<label class="form-control w-full max-w-xs">
+<label class="form-control w-full max-w-lg my-2">
     <div class="label">
         <span class="label-text">{{ __($label) }}</span>
     </div>

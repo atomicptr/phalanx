@@ -1,11 +1,11 @@
 @props(['label', 'fieldName', 'values'])
 
-<label class="form-control w-full max-w-xs">
+<label class="form-control w-full max-w-lg my-2">
     <div class="label">
         <span class="label-text">{{ __($label) }}</span>
     </div>
 
-    <select class="select select-bordered w-full max-w-xs @error($fieldName) select-error @enderror" wire:model="{{ $fieldName }}">
+    <select class="select select-bordered w-full max-w-lg @error($fieldName) select-error @enderror" wire:model.change="{{ $fieldName }}">
         @if (is_array($values))
             @foreach ($values as $key => $value)
                 <option value="{{ $key }}">

@@ -3,10 +3,11 @@
 namespace App\Livewire\Forms\Admin\Items;
 
 use App\Enums\Element;
+use App\Enums\ValueType;
 use App\Enums\WeaponType;
 use App\Models\Patch;
 use App\Models\Weapon;
-use App\Models\WeaponAbility;
+use App\Rules\ContainsValuesRule;
 use Atomicptr\Functional\Lst;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
@@ -28,11 +29,23 @@ class WeaponsForm extends Form
 
     public Element $element = Element::NEUTRAL;
 
-    public ?WeaponAbility $special = null;
+    public ?string $specialName = null;
 
-    public ?WeaponAbility $passive = null;
+    public ?string $specialDescription = null;
 
-    public ?WeaponAbility $active = null;
+    public ?array $specialValues = [];
+
+    public ?string $passiveName = null;
+
+    public ?string $passiveDescription = null;
+
+    public ?array $passiveValues = [];
+
+    public ?string $activeName = null;
+
+    public ?string $activeDescription = null;
+
+    public ?array $activeValues = [];
 
     public ?int $behemoth = null;
 
@@ -41,6 +54,15 @@ class WeaponsForm extends Form
     public function mount()
     {
         $this->patch = new Patch;
+    }
+
+    public function rules()
+    {
+        return [
+            'specialDescription' => new ContainsValuesRule($this->specialValues),
+            'passiveDescription' => new ContainsValuesRule($this->passiveValues),
+            'activeDescription' => new ContainsValuesRule($this->activeValues),
+        ];
     }
 
     public function setWeapon(Weapon $weapon): void
@@ -52,48 +74,90 @@ class WeaponsForm extends Form
         $this->description = $weapon->description;
         $this->icon = $weapon->icon;
         $this->element = $weapon->element;
-        $this->special = $weapon->special;
-        $this->passive = $weapon->passive;
-        $this->active = $weapon->active;
+        $this->specialName = $weapon->specialName;
+        $this->specialDescription = $weapon->specialDescription;
+        $this->specialValues = $this->prepareValues($weapon->specialValues);
+        $this->passiveName = $weapon->passiveName;
+        $this->passiveDescription = $weapon->passiveDescription;
+        $this->passiveValues = $this->prepareValues($weapon->passiveValues);
+        $this->activeName = $weapon->activeName;
+        $this->activeDescription = $weapon->activeDescription;
+        $this->activeValues = $this->prepareValues($weapon->activeValues);
         $this->behemoth = $weapon->behemoth;
         $this->patch = $weapon->patch;
     }
 
+    private function prepareValues(?array $values)
+    {
+        return Lst::map(
+            fn (array $value) => [...$value, 'type' => ValueType::from($value['type'])],
+            Lst::map(
+                fn (array $value) => array_merge(
+                    [
+                        'name' => '',
+                        'value' => '',
+                        'type' => ValueType::CUSTOM,
+                    ],
+                    $value
+                ),
+                $values
+            )
+        );
+    }
+
     protected function grabFormData(): array
     {
-        $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
-        $this->icon = $this->icon->storeAs(path: 'uploads/icons/weapons', name: Str::slug($this->name).$ext);
+        if ($this->icon instanceof TemporaryUploadedFile) {
+            $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
+            $this->icon = $this->icon->storeAs(path: 'uploads/icons/weapons', name: Str::slug($this->name).$ext);
+        }
 
-        return [
-            ...$this->only([
-                'name',
-                'type',
-                'description',
-                'icon',
-                'element',
-                'behemoth',
-                'patch',
-            ]),
-        ];
+        $this->specialValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->specialValues);
+        $this->passiveValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->passiveValues);
+        $this->activeValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->activeValues);
+
+        return $this->all();
     }
 
     public function store(): void
     {
         $this->validate();
-
-        // TODO: add custom handling for icon, abilities
-
-        Weapon::create([
-            ...$this->grabFormData(),
-        ]);
+        Weapon::create($this->grabFormData());
     }
 
     public function update(): void
     {
         $this->validate();
+        $this->weapon->update($this->grabFormData());
+    }
 
-        $this->weapon->update([
-            ...$this->grabFormData(),
-        ]);
+    public function addSpecialValue()
+    {
+        $this->specialValues[] = ['name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+    }
+
+    public function deleteSpecial(int $index)
+    {
+        $this->specialValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->specialValues);
+    }
+
+    public function addPassiveValue()
+    {
+        $this->passiveValues[] = ['name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+    }
+
+    public function deletePassive(int $index)
+    {
+        $this->passiveValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->passiveValues);
+    }
+
+    public function addActiveValue()
+    {
+        $this->activeValues[] = ['name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+    }
+
+    public function deleteActive(int $index)
+    {
+        $this->activeValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->activeValues);
     }
 }

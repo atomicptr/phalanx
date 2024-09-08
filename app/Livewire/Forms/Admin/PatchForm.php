@@ -3,19 +3,25 @@
 namespace App\Livewire\Forms\Admin;
 
 use App\Models\Patch;
-use Livewire\Attributes\Validate;
+use App\Rules\VersionStringRule;
 use Livewire\Form;
 
 class PatchForm extends Form
 {
     public ?Patch $patch = null;
 
-    #[Validate('required')]
     public string $name = '';
 
     public bool $live = false;
 
     public bool $confidential = false;
+
+    public function rules()
+    {
+        return [
+            'name' => ['required', new VersionStringRule],
+        ];
+    }
 
     public function setPatch(Patch $patch): void
     {
@@ -28,14 +34,14 @@ class PatchForm extends Form
 
     public function store(): void
     {
-        $this->validate(); // TODO: validate patch name
+        $this->validate();
 
         Patch::create($this->all());
     }
 
     public function update(): void
     {
-        $this->validate(); // TODO: validate version name
+        $this->validate();
 
         $this->patch->update($this->all());
     }

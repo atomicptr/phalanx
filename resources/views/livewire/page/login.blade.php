@@ -18,7 +18,7 @@
                 <div class="form-control w-full max-w-xs">
                     <label class="input input-bordered flex items-center gap-2 {{ $errors->has("email") ? "input-error" : "" }}">
                         <x-heroicon-o-envelope class="w-4 h-4" />
-                        <input wire:model="email" type="text" class="grow" placeholder="{{ __("E-Mail") }}" :value="old('email')" />
+                        <input wire:model="email" type="text" class="grow" placeholder="{{ __("E-Mail") }}" />
                     </label>
 
                     @if ($errors->has("email"))

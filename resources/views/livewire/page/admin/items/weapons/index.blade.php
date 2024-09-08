@@ -22,7 +22,7 @@
                             </div>
                         </td>
                         <td>
-                            <a href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" class="font-bold">
+                            <a href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" class="font-bold" wire:navigate>
                                 {{ $weapon->name }}
                             </a>
                         </td>
@@ -31,7 +31,7 @@
                         </td>
                         <td>
                             <div class="join">
-                                <a class="btn join-item" href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}">
+                                <a class="btn join-item" href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" wire:navigate>
                                     <x-heroicon-o-pencil class="w-6 h-6" />
                                 </a>
                                 <a class="btn join-item" wire:click="delete({{ $weapon->id }})" wire:confirm="{{ __("Are you sure you want to delete this patch?")}}">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="flex flex-row mt-8">
-        <a class="btn btn-primary" href="{{ route("admin.items.weapons.new") }}">
+        <a class="btn btn-primary" href="{{ route("admin.items.weapons.new") }}" wire:navigate>
             <x-heroicon-o-plus class="w-6 h-6" />
             {{ __("New") }}
         </a>

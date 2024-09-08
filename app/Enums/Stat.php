@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum Stat: string
+use App\Contracts\DisplayAsString;
+
+enum Stat: string implements DisplayAsString
 {
     case MIGHT = 'might';
     case CRITICAL = 'critical';
@@ -10,4 +12,16 @@ enum Stat: string
     case VITALITY = 'vitality';
     case DEFENSE = 'defense';
     case ENDURANCE = 'endurance';
+
+    public function displayString(): string
+    {
+        return match ($this) {
+            self::MIGHT => 'Might',
+            self::CRITICAL => 'Critical',
+            self::SPEED => 'Speed',
+            self::VITALITY => 'Vitality',
+            self::DEFENSE => 'Defense',
+            self::ENDURANCE => 'Endurance',
+        };
+    }
 }

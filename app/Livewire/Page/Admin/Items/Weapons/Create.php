@@ -2,27 +2,21 @@
 
 namespace App\Livewire\Page\Admin\Items\Weapons;
 
-use App\Livewire\Forms\Admin\Items\WeaponsForm;
-use App\Models\Patch;
-use Atomicptr\Functional\Lst;
+use App\Traits\WithPatches;
+use App\Traits\WithWeaponsForm;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
     use WithFileUploads;
-
-    public WeaponsForm $form;
-
-    public array $patches;
+    use WithPatches;
+    use WithWeaponsForm;
 
     public function mount()
     {
-        $patches = Patch::orderBy('name', 'DESC')->get()->all();
-        $this->patches = Lst::map(fn (Patch $patch) => [$patch['id'], $patch['name']], $patches); // TODO: dont show confidential patches here if user has no access
-        $this->patches = array_combine(Lst::map([Lst::class, 'first'], $this->patches), Lst::map([Lst::class, 'second'], $this->patches));
-
-        $this->form->patch = Lst::first($patches)->id;
+        $this->loadPatches();
+        $this->form->patch = $this->newestPatch?->id;
     }
 
     public function save()
