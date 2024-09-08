@@ -31,7 +31,7 @@ class Login extends Component
         session()->flash('error', 'Invalid credentials!');
     }
 
-    #[Layout('layouts.base')]
+    #[Layout('components.layouts.base')]
     public function render()
     {
         return view('livewire.page.login');
