@@ -22,7 +22,7 @@ class Create extends Component
         $this->patches = Lst::map(fn (Patch $patch) => [$patch['id'], $patch['name']], $patches); // TODO: dont show confidential patches here if user has no access
         $this->patches = array_combine(Lst::map([Lst::class, 'first'], $this->patches), Lst::map([Lst::class, 'second'], $this->patches));
 
-        $this->form->patch = Lst::first($patches);
+        $this->form->patch = Lst::first($patches)->id;
     }
 
     public function save()

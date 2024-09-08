@@ -1,13 +1,6 @@
 <div>
     <h1 class="text-xl mb-8">{{ __("Weapons") }}</h1>
 
-    <div class="flex flex-row justify-end mb-8">
-        <a class="btn btn-primary" href="{{ route("admin.items.weapons.new") }}">
-            <x-heroicon-o-plus class="w-6 h-6" />
-            {{ __("New") }}
-        </a>
-    </div>
-
     <div class="overflow-x-auto">
         <table class="table">
             <thead>
@@ -50,5 +43,12 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+    <div class="flex flex-row mt-8">
+        <a class="btn btn-primary" href="{{ route("admin.items.weapons.new") }}">
+            <x-heroicon-o-plus class="w-6 h-6" />
+            {{ __("New") }}
+        </a>
     </div>
 </div>
