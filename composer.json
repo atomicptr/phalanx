@@ -1,11 +1,14 @@
 {
-    "name": "laravel/laravel",
+    "name": "atomicptr/phalanx",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "The backend for authoring Dauntless Builder data",
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "atomicptr/functional": "^0",
         "blade-ui-kit/blade-heroicons": "^2.4",
         "laravel/framework": "^11.9",
@@ -15,6 +18,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.1",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",

@@ -1,5 +1,6 @@
 /storage/debugbar
 /public/uploads
+/public/build
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,laravel,composer
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,laravel,composer
