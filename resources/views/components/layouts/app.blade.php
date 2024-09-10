@@ -106,12 +106,6 @@
                         </li>
                         <li>
                             <a class="disabled">
-                                <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
-                                {{ __("Lanterns") }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="disabled">
                                 <img src="{{ asset("icons/prismatic.png") }}" class="w-6 h-6" />
                                 {{ __("Cells") }}
                             </a>
