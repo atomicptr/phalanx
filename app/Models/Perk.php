@@ -14,6 +14,7 @@ class Perk extends Model
         'effect',
         'values',
         'threshold',
+        'patch',
     ];
 
     protected $casts = [

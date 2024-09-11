@@ -83,7 +83,7 @@
 
                 <li>
                     <h2 class="menu-title">
-                        {{ __("Item Data") }}
+                        {{ __("Data") }}
                     </h2>
                     <ul>
                         <li>
@@ -110,16 +110,8 @@
                                 {{ __("Cells") }}
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <h2 class="menu-title">
-                        {{ __("Misc Data") }}
-                    </h2>
-                    <ul>
                         <li>
-                            <a class="disabled">
+                            <a href="{{ route("admin.misc.perks")}}" class="{{ \App\Utils\RouteUtil::active("admin.misc.perks") }}" wire:navigate>
                                 <img src="{{ asset("icons/brutality.png") }}" class="w-6 h-6" />
                                 {{ __("Perks") }}
                             </a>
@@ -128,6 +120,32 @@
                             <a class="disabled">
                                 <x-heroicon-o-question-mark-circle class="w-6 h-6" />
                                 {{ __("Behemoths") }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <h2 class="menu-title">
+                        {{ __("Builds") }}
+                    </h2>
+                    <ul>
+                        <li>
+                            <a class="disabled">
+                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                {{ __("Meta Builds") }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="disabled">
+                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                {{ __("Trial Builds") }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="disabled">
+                                <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                                {{ __("Progression Builds") }}
                             </a>
                         </li>
                     </ul>

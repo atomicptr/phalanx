@@ -4,12 +4,11 @@ namespace App\Livewire\Forms\Admin\Items;
 
 use App\Enums\Element;
 use App\Enums\Stat;
-use App\Enums\ValueType;
 use App\Enums\WeaponTalentOptionType;
 use App\Enums\WeaponType;
-use App\Models\Patch;
 use App\Models\Weapon;
 use App\Rules\ContainsValuesRule;
+use App\Utils\ValuesUtil;
 use Atomicptr\Functional\Lst;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
@@ -53,12 +52,7 @@ class WeaponsForm extends Form
 
     public ?int $behemoth = null;
 
-    public int $patch;
-
-    public function mount()
-    {
-        $this->patch = new Patch;
-    }
+    public ?int $patch = null;
 
     public function rules()
     {
@@ -81,35 +75,16 @@ class WeaponsForm extends Form
         $this->element = $weapon->element;
         $this->specialName = $weapon->specialName;
         $this->specialDescription = $weapon->specialDescription;
-        $this->specialValues = $this->prepareValues($weapon->specialValues);
+        $this->specialValues = ValuesUtil::prepare($weapon->specialValues);
         $this->passiveName = $weapon->passiveName;
         $this->passiveDescription = $weapon->passiveDescription;
-        $this->passiveValues = $this->prepareValues($weapon->passiveValues);
+        $this->passiveValues = ValuesUtil::prepare($weapon->passiveValues);
         $this->activeName = $weapon->activeName;
         $this->activeDescription = $weapon->activeDescription;
-        $this->activeValues = $this->prepareValues($weapon->activeValues);
+        $this->activeValues = ValuesUtil::prepare($weapon->activeValues);
         $this->talents = $this->prepareTalents($weapon->talents);
         $this->behemoth = $weapon->behemoth;
         $this->patch = $weapon->patch;
-    }
-
-    private function prepareValues(?array $values): array
-    {
-        return Lst::map(
-            fn (array $value) => [...$value, 'type' => ValueType::from($value['type'])],
-            Lst::map(
-                fn (array $value) => array_merge(
-                    [
-                        'id' => (string) Str::uuid(),
-                        'name' => '',
-                        'value' => '',
-                        'type' => ValueType::CUSTOM,
-                    ],
-                    $value
-                ),
-                $values
-            )
-        );
     }
 
     private function prepareTalents(?array $talents): array
@@ -142,7 +117,7 @@ class WeaponsForm extends Form
                             ],
                             $option,
                         );
-                        $option['values'] = $this->prepareValues($option['values']);
+                        $option['values'] = ValuesUtil::prepare($option['values']);
                         break;
                     case WeaponTalentOptionType::STAT:
                         $option = array_merge(
@@ -178,9 +153,9 @@ class WeaponsForm extends Form
             ]);
         }
 
-        $this->specialValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->specialValues);
-        $this->passiveValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->passiveValues);
-        $this->activeValues = Lst::filter(fn (array $values) => ! empty($values['name']) && ! empty($values['value']), $this->activeValues);
+        $this->specialValues = ValuesUtil::clean($this->specialValues);
+        $this->passiveValues = ValuesUtil::clean($this->passiveValues);
+        $this->activeValues = ValuesUtil::clean($this->activeValues);
 
         // TODO: clean up talents
 
@@ -201,32 +176,32 @@ class WeaponsForm extends Form
 
     public function addSpecialValue()
     {
-        $this->specialValues[] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->specialValues = ValuesUtil::add($this->specialValues);
     }
 
     public function deleteSpecial(int $index)
     {
-        $this->specialValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->specialValues);
+        $this->specialValues = ValuesUtil::remove($this->specialValues, $index);
     }
 
     public function addPassiveValue()
     {
-        $this->passiveValues[] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->passiveValues = ValuesUtil::add($this->passiveValues);
     }
 
     public function deletePassive(int $index)
     {
-        $this->passiveValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->passiveValues);
+        $this->passiveValues = ValuesUtil::remove($this->passiveValues, $index);
     }
 
     public function addActiveValue()
     {
-        $this->activeValues[] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->activeValues = ValuesUtil::add($this->activeValues);
     }
 
     public function deleteActive(int $index)
     {
-        $this->activeValues = Lst::filter(fn (array $val, int $idx) => $index !== $idx, $this->activeValues);
+        $this->activeValues = ValuesUtil::remove($this->activeValues, $index);
     }
 
     public function addTalent(): void
@@ -238,7 +213,7 @@ class WeaponsForm extends Form
     public function addOption(int $index): void
     {
         assert(count($this->talents[$index]['options']) < 5);
-        $this->talents[$index]['options'][] = ['id' => (string) Str::uuid(), 'type' => WeaponTalentOptionType::CUSTOM];
+        $this->talents[$index]['options'][] = ['id' => (string) Str::uuid(), 'type' => WeaponTalentOptionType::CUSTOM, 'values' => []];
     }
 
     public function deleteOption(int $index, int $optionIndex): void
@@ -251,11 +226,11 @@ class WeaponsForm extends Form
         if (! array_key_exists('values', $this->talents[$index]['options'][$optionIndex])) {
             $this->talents[$index]['options'][$optionIndex]['values'] = [];
         }
-        $this->talents[$index]['options'][$optionIndex]['values'][] = ['id' => (string) Str::uuid(), 'name' => '', 'value' => '', 'type' => ValueType::CUSTOM];
+        $this->talents[$index]['options'][$optionIndex]['values'] = ValuesUtil::add($this->talents[$index]['options'][$optionIndex]['values']);
     }
 
     public function deleteOptionValue(int $index, int $optionIndex, int $valueIndex): void
     {
-        $this->talents[$index]['options'][$optionIndex]['values'] = Lst::filter(fn (array $val, int $idx) => $idx !== $valueIndex, $this->talents[$index]['options'][$optionIndex]['values']);
+        $this->talents[$index]['options'][$optionIndex]['values'] = ValuesUtil::remove($this->talents[$index]['options'][$optionIndex]['values'], $valueIndex);
     }
 }

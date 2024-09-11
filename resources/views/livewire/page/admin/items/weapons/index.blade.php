@@ -7,7 +7,7 @@
                 <tr>
                     <th width="32">{{ __("Icon") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Type") }}
+                    <th>{{ __("Type") }}</th>
                     <th width="32"></th>
                 </tr>
             </thead>

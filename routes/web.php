@@ -2,6 +2,7 @@
 
 use App\Livewire\Page\Admin\Dashboard;
 use App\Livewire\Page\Admin\Items\Weapons;
+use App\Livewire\Page\Admin\Misc\Perks;
 use App\Livewire\Page\Admin\Patch;
 use App\Livewire\Page\Login;
 use Illuminate\Support\Facades\Auth;
@@ -28,4 +29,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/items/weapons', Weapons\Index::class)->name('admin.items.weapons');
     Route::get('/admin/items/weapons/new', Weapons\Create::class)->name('admin.items.weapons.new');
     Route::get('/admin/items/weapons/{weapon}', Weapons\Edit::class)->name('admin.items.weapons.edit');
+
+    // misc data
+    Route::get('/admin/misc/perks', Perks\Index::class)->name('admin.misc.perks');
+    Route::get('/admin/misc/perks/new', Perks\Create::class)->name('admin.misc.perks.new');
+    Route::get('/admin/misc/perks/{perk}', Perks\Edit::class)->name('admin.misc.perks.edit');
 });

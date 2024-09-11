@@ -25,35 +25,19 @@
                                         <h4 class="text-lg">{{ __("Values") }}</h4>
                                     </div>
 
-                                    @foreach ($option['values'] ?? [] as $valueIndex => $value)
-                                        <div class="card bg-base-300 shadow-xl my-4 min-w-md" wire:key="value-{{ $value['id'] }}">
-                                            <div class="card-body">
-                                                <x-input.textfield label="Name" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.values.{{ $valueIndex }}.name" />
-                                                <x-input.select label="Type" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.values.{{ $valueIndex }}.type" values="{{ \App\Enums\ValueType::class }}" />
-
-                                                @if ($value['type']->hasStatField())
-                                                    <x-input.select label="Stat" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.values.{{ $valueIndex }}.stat" values="{{ \App\Enums\Stat::class }}" />
-                                                @endif
-
-                                                <x-input.textfield label="Value" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.values.{{ $valueIndex }}.value" />
-
-                                                <div class="card-actions justify-end mt-4">
-                                                    <button class="btn btn-sm btn-ghost" type="button" wire:click="deleteOptionValue({{ $index }}, {{ $optionIndex }}, {{ $valueIndex }})">
-                                                        <x-heroicon-o-trash class="w-6 h-6" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-                                    <div class="flex flex-row w-full justify-center mt-4">
-                                        <button class="btn btn-sm btn-primary" type="button" wire:click="addOptionValue({{ $index }}, {{ $optionIndex }})">
-                                            <x-heroicon-o-plus class="w-6 h-6"/>
-                                            {{ __("Add Value") }}
-                                        </button>
-                                    </div>
+                                    <x-input.values-repeater
+                                        fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.values"
+                                        :values="$option['values']"
+                                        addFunc="addOptionValue"
+                                        addFuncParamsPrefix="{{ $index }}, {{ $optionIndex }}"
+                                        deleteFunc="deleteOptionValue"
+                                        deleteFuncParamsPrefix="{{ $index }}, {{ $optionIndex }},"
+                                    />
                                 @elseif ($option['type'] === \App\Enums\WeaponTalentOptionType::STAT)
                                     <x-input.select label="Stat" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.stat" values="{{ \App\Enums\Stat::class }}" />
+                                    <x-input.textfield label="Value" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.value" />
+                                @elseif ($option['type'] === \App\Enums\WeaponTalentOptionType::PERK)
+                                    <x-input.perk-select fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.perk" />
                                     <x-input.textfield label="Value" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.value" />
                                 @endif
 
