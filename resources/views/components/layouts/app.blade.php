@@ -24,7 +24,7 @@
                     </div>
                     <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li>
-                            <a class="disabled">
+                            <a href="{{ route("admin.settings") }}" wire:navigate>
                                 {{ __("Settings") }}
                             </a>
                         </li>
@@ -38,6 +38,8 @@
             </div>
 
             <div class="p-2">
+                <x-flash-messages />
+
                 {{ $slot }}
             </div>
         </div>

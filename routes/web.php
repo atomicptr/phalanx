@@ -4,6 +4,7 @@ use App\Livewire\Page\Admin\Dashboard;
 use App\Livewire\Page\Admin\Items\Weapons;
 use App\Livewire\Page\Admin\Misc\Perks;
 use App\Livewire\Page\Admin\Patch;
+use App\Livewire\Page\Admin\Settings;
 use App\Livewire\Page\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::get('/logout', function () {
 
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin', Dashboard::class)->name('admin.index');
+    Route::get('/admin/settings', Settings::class)->name('admin.settings');
 
     // administration
     Route::get('/admin/patch', Patch\Index::class)->name('admin.patch');
