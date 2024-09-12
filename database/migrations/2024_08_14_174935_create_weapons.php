@@ -2,7 +2,6 @@
 
 use App\Enums\Element;
 use App\Enums\WeaponType;
-use App\Models\Behemoth;
 use App\Models\Patch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -38,8 +37,6 @@ return new class extends Migration
             $table->json('activeValues')->nullable(true);
 
             $table->json('talents')->nullable(true);
-
-            $table->foreignIdFor(Behemoth::class, 'behemoth')->nullable(true);
 
             $table->foreignIdFor(Patch::class, 'patch');
             $table->timestamps();

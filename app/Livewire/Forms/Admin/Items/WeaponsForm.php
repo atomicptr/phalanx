@@ -50,8 +50,6 @@ class WeaponsForm extends Form
 
     public ?array $talents = [];
 
-    public ?int $behemoth = null;
-
     public ?int $patch = null;
 
     public function rules()
@@ -83,7 +81,6 @@ class WeaponsForm extends Form
         $this->activeDescription = $weapon->activeDescription;
         $this->activeValues = ValuesUtil::prepare($weapon->activeValues);
         $this->talents = $this->prepareTalents($weapon->talents);
-        $this->behemoth = $weapon->behemoth;
         $this->patch = $weapon->patch;
     }
 
