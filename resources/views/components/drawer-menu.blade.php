@@ -46,7 +46,7 @@
                 </a>
             </li>
             <li>
-                <a class="disabled">
+                <a href="{{ route("admin.items.armours")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.armours") }}" wire:navigate>
                     <img src="{{ asset("icons/torso.png") }}" class="w-6 h-6" />
                     {{ __("Armours") }}
                 </a>

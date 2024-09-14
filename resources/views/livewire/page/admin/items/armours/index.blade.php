@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-xl mb-8">{{ __("Weapons") }}</h1>
+    <h1 class="text-xl mb-8">{{ __("Armours") }}</h1>
 
     <div class="overflow-x-auto">
         <table class="table">
@@ -12,29 +12,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($weapons as $weapon)
+                @foreach ($armours as $armour)
                     <tr>
                         <td>
                             <div class="avatar">
                                 <div class="mask mask-squircle h-12 w-12">
-                                    <img src="{{ asset($weapon->icon ?? "icons/noicon.png") }}" />
+                                    <img src="{{ asset($armour->icon ?? "icons/noicon.png") }}" />
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <a href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" class="font-bold" wire:navigate>
-                                {{ $weapon->name }}
+                            <a href="{{ route("admin.items.armours.edit", ['armour' => $armour->id])}}" class="font-bold" wire:navigate>
+                                {{ $armour->name }}
                             </a>
                         </td>
                         <td>
-                            {{ $weapon->type->displayString() }}
+                            {{ $armour->type->displayString() }}
                         </td>
                         <td>
                             <div class="join">
-                                <a class="btn join-item" href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" wire:navigate>
+                                <a class="btn join-item" href="{{ route("admin.items.armours.edit", ['armour' => $armour->id])}}" wire:navigate>
                                     <x-heroicon-o-pencil class="w-6 h-6" />
                                 </a>
-                                <a class="btn join-item" wire:click="delete({{ $weapon->id }})" wire:confirm="{{ __("Are you sure you want to delete this weapon?")}}">
+                                <a class="btn join-item" wire:click="delete({{ $armour->id }})" wire:confirm="{{ __("Are you sure you want to delete this armour piece?")}}">
                                     <x-heroicon-o-trash class="w-6 h-6" />
                                 </a>
                             </div>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="flex flex-row mt-8">
-        <a class="btn btn-primary" href="{{ route("admin.items.weapons.new") }}" wire:navigate>
+        <a class="btn btn-primary" href="{{ route("admin.items.armours.new") }}" wire:navigate>
             <x-heroicon-o-plus class="w-6 h-6" />
             {{ __("New") }}
         </a>

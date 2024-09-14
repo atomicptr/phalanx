@@ -24,7 +24,7 @@ class Login extends Component
             'password' => $this->password,
         ];
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, true)) {
             return $this->redirectRoute('admin.index', navigate: true);
         }
 

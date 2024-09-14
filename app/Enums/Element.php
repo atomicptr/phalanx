@@ -9,7 +9,6 @@ enum Element: string implements DisplayAsString
 {
     use EnumValuesTrait;
 
-    case NEUTRAL = 'neutral';
     case BLAZE = 'blaze';
     case FROST = 'frost';
     case SHOCK = 'shock';
@@ -20,7 +19,6 @@ enum Element: string implements DisplayAsString
     public function displayString(): string
     {
         return match ($this) {
-            self::NEUTRAL => 'Neutral',
             self::BLAZE => 'Blaze',
             self::FROST => 'Frost',
             self::SHOCK => 'Shock',
@@ -33,7 +31,6 @@ enum Element: string implements DisplayAsString
     public function opposite(): ?Element
     {
         return match ($this) {
-            self::NEUTRAL => null,
             self::BLAZE => self::FROST,
             self::FROST => self::BLAZE,
             self::SHOCK => self::TERRA,

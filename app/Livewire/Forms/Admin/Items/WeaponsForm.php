@@ -28,7 +28,7 @@ class WeaponsForm extends Form
 
     public TemporaryUploadedFile|string|null $icon = null;
 
-    public Element $element = Element::NEUTRAL;
+    public Element $element = Element::BLAZE;
 
     public ?string $specialName = null;
 

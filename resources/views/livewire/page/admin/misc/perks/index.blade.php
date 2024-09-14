@@ -22,7 +22,7 @@
                                 <a class="btn join-item" href="{{ route("admin.misc.perks.edit", ['perk' => $perk->id])}}" wire:navigate>
                                     <x-heroicon-o-pencil class="w-6 h-6" />
                                 </a>
-                                <a class="btn join-item" wire:click="delete({{ $perk->id }})" wire:confirm="{{ __("Are you sure you want to delete this patch?")}}">
+                                <a class="btn join-item" wire:click="delete({{ $perk->id }})" wire:confirm="{{ __("Are you sure you want to delete this perk?")}}">
                                     <x-heroicon-o-trash class="w-6 h-6" />
                                 </a>
                             </div>
