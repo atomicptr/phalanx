@@ -34,12 +34,6 @@
         </h2>
         <ul>
             <li>
-                <a class="disabled">
-                    <img src="{{ asset("icons/omnicell.png") }}" class="w-6 h-6" />
-                    {{ __("Omnicells") }}
-                </a>
-            </li>
-            <li>
                 <a href="{{ route("admin.items.weapons")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.weapons") }}" wire:navigate>
                     <img src="{{ asset("icons/weapons.png") }}" class="w-6 h-6" />
                     {{ __("Weapons") }}
@@ -49,6 +43,12 @@
                 <a href="{{ route("admin.items.armours")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.armours") }}" wire:navigate>
                     <img src="{{ asset("icons/torso.png") }}" class="w-6 h-6" />
                     {{ __("Armours") }}
+                </a>
+            </li>
+            <li>
+                <a class="disabled">
+                    <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
+                    {{ __("Lantern Cores") }}
                 </a>
             </li>
             <li>

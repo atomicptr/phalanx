@@ -8,7 +8,7 @@ enum ItemType: string
 {
     use EnumValuesTrait;
 
-    case OMNICELL = 'omnicell';
+    case LANTERN_CORE = 'lantern_core';
     case WEAPON = 'weapon';
     case ARMOR = 'armor';
     case LANTERN = 'lantern';
