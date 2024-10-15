@@ -20,6 +20,12 @@
                 </a>
             </li>
             <li>
+                <a class="disabled">
+                    <x-heroicon-o-wrench-screwdriver class="w-6 h-6" />
+                    {{ __("API Keys") }}
+                </a>
+            </li>
+            <li>
                 <a href="{{ route("admin.patch")}}" class="{{ \App\Utils\RouteUtil::active("admin.patch") }}" wire:navigate>
                     <x-heroicon-o-square-2-stack class="w-6 h-6" />
                     {{ __("Patches") }}
@@ -49,12 +55,6 @@
                 <a class="disabled">
                     <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
                     {{ __("Lantern Cores") }}
-                </a>
-            </li>
-            <li>
-                <a class="disabled">
-                    <img src="{{ asset("icons/prismatic.png") }}" class="w-6 h-6" />
-                    {{ __("Cells") }}
                 </a>
             </li>
             <li>
