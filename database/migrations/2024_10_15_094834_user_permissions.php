@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('can_access_confidential')->default(false); // can access confidential patches / data which is currently confidential
             $table->boolean('can_access_patches')->default(false); // can access the patches page and create new ones
             $table->boolean('can_edit_builds')->default(false); // can access the builds section and create/manage meta builds etc.
+            $table->boolean('can_edit_data')->default(false); // can access the data section and edit items
         });
     }
 
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->dropColumn('can_access_confidential');
             $table->dropColumn('can_access_patches');
             $table->dropColumn('can_edit_builds');
+            $table->dropColumn('can_edit_data');
         });
     }
 };

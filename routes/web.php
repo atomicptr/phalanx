@@ -30,17 +30,17 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/patch/{patch:name}', Patch\Edit::class)->name('admin.patch.edit')->can(Permissions::CAN_PUBLISH->value);
 
     // weapon data
-    Route::get('/admin/items/weapons', Weapons\Index::class)->name('admin.items.weapons');
-    Route::get('/admin/items/weapons/new', Weapons\Create::class)->name('admin.items.weapons.new');
-    Route::get('/admin/items/weapons/{weapon}', Weapons\Edit::class)->name('admin.items.weapons.edit');
+    Route::get('/admin/items/weapons', Weapons\Index::class)->name('admin.items.weapons')->can(Permissions::CAN_EDIT_DATA->value);
+    Route::get('/admin/items/weapons/new', Weapons\Create::class)->name('admin.items.weapons.new')->can(Permissions::CAN_EDIT_DATA->value);
+    Route::get('/admin/items/weapons/{weapon}', Weapons\Edit::class)->name('admin.items.weapons.edit')->can(Permissions::CAN_EDIT_DATA->value);
 
     // armour data
-    Route::get('/admin/items/armours', Armours\Index::class)->name('admin.items.armours');
-    Route::get('/admin/items/armours/new', Armours\Create::class)->name('admin.items.armours.new');
-    Route::get('/admin/items/armours/{armour}', Armours\Edit::class)->name('admin.items.armours.edit');
+    Route::get('/admin/items/armours', Armours\Index::class)->name('admin.items.armours')->can(Permissions::CAN_EDIT_DATA->value);
+    Route::get('/admin/items/armours/new', Armours\Create::class)->name('admin.items.armours.new')->can(Permissions::CAN_EDIT_DATA->value);
+    Route::get('/admin/items/armours/{armour}', Armours\Edit::class)->name('admin.items.armours.edit')->can(Permissions::CAN_EDIT_DATA->value);
 
     // perk data
-    Route::get('/admin/misc/perks', Perks\Index::class)->name('admin.misc.perks');
-    Route::get('/admin/misc/perks/new', Perks\Create::class)->name('admin.misc.perks.new');
-    Route::get('/admin/misc/perks/{perk}', Perks\Edit::class)->name('admin.misc.perks.edit');
+    Route::get('/admin/misc/perks', Perks\Index::class)->name('admin.misc.perks')->can(Permissions::CAN_EDIT_DATA->value);
+    Route::get('/admin/misc/perks/new', Perks\Create::class)->name('admin.misc.perks.new')->can(Permissions::CAN_EDIT_DATA->value);
+    Route::get('/admin/misc/perks/{perk}', Perks\Edit::class)->name('admin.misc.perks.edit')->can(Permissions::CAN_EDIT_DATA->value);
 });

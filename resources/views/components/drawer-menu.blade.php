@@ -40,37 +40,39 @@
         </li>
     @endcanany
 
-    <li>
-        <h2 class="menu-title">
-            {{ __("Data") }}
-        </h2>
-        <ul>
-            <li>
-                <a href="{{ route("admin.items.weapons")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.weapons") }}" wire:navigate>
-                    <img src="{{ asset("icons/weapons.png") }}" class="w-6 h-6" />
-                    {{ __("Weapons") }}
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("admin.items.armours")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.armours") }}" wire:navigate>
-                    <img src="{{ asset("icons/torso.png") }}" class="w-6 h-6" />
-                    {{ __("Armours") }}
-                </a>
-            </li>
-            <li>
-                <a class="disabled">
-                    <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
-                    {{ __("Lantern Cores") }}
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("admin.misc.perks")}}" class="{{ \App\Utils\RouteUtil::active("admin.misc.perks") }}" wire:navigate>
-                    <img src="{{ asset("icons/brutality.png") }}" class="w-6 h-6" />
-                    {{ __("Perks") }}
-                </a>
-            </li>
-        </ul>
-    </li>
+    @can("can-edit-data")
+        <li>
+            <h2 class="menu-title">
+                {{ __("Data") }}
+            </h2>
+            <ul>
+                <li>
+                    <a href="{{ route("admin.items.weapons")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.weapons") }}" wire:navigate>
+                        <img src="{{ asset("icons/weapons.png") }}" class="w-6 h-6" />
+                        {{ __("Weapons") }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route("admin.items.armours")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.armours") }}" wire:navigate>
+                        <img src="{{ asset("icons/torso.png") }}" class="w-6 h-6" />
+                        {{ __("Armours") }}
+                    </a>
+                </li>
+                <li>
+                    <a class="disabled">
+                        <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
+                        {{ __("Lantern Cores") }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route("admin.misc.perks")}}" class="{{ \App\Utils\RouteUtil::active("admin.misc.perks") }}" wire:navigate>
+                        <img src="{{ asset("icons/brutality.png") }}" class="w-6 h-6" />
+                        {{ __("Perks") }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @endcan
 
     @can("can-edit-builds")
         <li>
