@@ -27,10 +27,21 @@ class ArmourResource extends JsonResource
     {
         return Lst::sort(fn (array $a, array $b) => $a['min_level'] <=> $b['min_level'], Lst::map(fn (array $stat) => [
             'min_level' => NumberUtil::parse($stat['min_level']),
-            'perks' => Lst::map(fn (array $perk) => [
-                'perk' => intval($perk['perk']),
-                'amount' => intval($perk['amount']),
-            ], $stat['perks']),
+            'perks' => $this->perksMap($stat['perks']),
         ], $this->stats));
+    }
+
+    private function perksMap(array $perks): \stdClass
+    {
+        // for some reason this wont work with arrays, theyll be turned into
+        // list style arrays for instance ['5' => 10] will be turned into [10] here
+        // so we just use good ol \stdClass
+        $perksMap = new \stdClass;
+
+        foreach ($perks as $perk) {
+            $perksMap->{$perk['perk']} = intval($perk['amount']);
+        }
+
+        return $perksMap;
     }
 }
