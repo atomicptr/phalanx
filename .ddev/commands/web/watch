@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+trap terminate SIGINT
+
+terminate(){
+    pkill -SIGINT -P $$
+    exit
+}
+
+npm run dev &
+
+wait

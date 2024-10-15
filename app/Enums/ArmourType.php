@@ -24,4 +24,15 @@ enum ArmourType: string implements DisplayAsString
             default => $this->value,
         };
     }
+
+    public function cellCount(): int
+    {
+        return match ($this) {
+            self::HEAD => 1,
+            self::TORSO => 2,
+            self::ARMS => 1,
+            self::LEGS => 2,
+            default => 0,
+        };
+    }
 }

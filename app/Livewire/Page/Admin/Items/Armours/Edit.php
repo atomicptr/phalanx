@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Page\Admin\Items\Armours;
 
-use App\Livewire\Forms\Admin\Items\ArmourForm;
 use App\Models\Armour;
+use App\Traits\WithArmourForm;
 use App\Traits\WithPatches;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -11,10 +11,9 @@ use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
+    use WithArmourForm;
     use WithFileUploads;
     use WithPatches;
-
-    public ArmourForm $form;
 
     #[Url]
     public Armour $armour;

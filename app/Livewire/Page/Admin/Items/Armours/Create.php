@@ -2,17 +2,16 @@
 
 namespace App\Livewire\Page\Admin\Items\Armours;
 
-use App\Livewire\Forms\Admin\Items\ArmourForm;
+use App\Traits\WithArmourForm;
 use App\Traits\WithPatches;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithArmourForm;
     use WithFileUploads;
     use WithPatches;
-
-    public ArmourForm $form;
 
     public function mount()
     {

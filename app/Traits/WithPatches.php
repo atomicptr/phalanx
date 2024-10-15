@@ -14,6 +14,6 @@ trait WithPatches
     private function loadPatches()
     {
         $this->patches = Patch::orderBy('name', 'DESC')->get()->all();
-        $this->newestPatch = Lst::length($this->patches) > 0 ? Lst::first($this->patches) : null;
+        $this->newestPatch = Lst::length($this->patches) > 0 ? Lst::find(fn (Patch $p) => (bool) $p->live, $this->patches)->orElse(fn () => Lst::first($this->patches)) : null;
     }
 }

@@ -5,6 +5,8 @@ namespace App\Livewire\Forms\Admin\Items;
 use App\Enums\ArmourType;
 use App\Enums\Element;
 use App\Models\Armour;
+use Atomicptr\Functional\Lst;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
@@ -41,6 +43,8 @@ class ArmourForm extends Form
         $this->patch = $armour->patch;
     }
 
+    // TODO: validate stats
+
     public function store()
     {
         $this->validate();
@@ -51,5 +55,32 @@ class ArmourForm extends Form
     {
         $this->validate();
         $this->armour->update($this->all());
+    }
+
+    public function addStatSet(): void
+    {
+        $this->stats = Lst::sort(fn (array $a, array $b) => $a['min_level'] <=> $b['min_level'], $this->stats);
+        $highestLevel = Lst::length($this->stats) > 0 ? Lst::last($this->stats)['min_level'] : 0;
+        $this->stats = Lst::cons($this->stats, ['id' => (string) Str::uuid(), 'min_level' => (Lst::isEmpty($this->stats) ? 0 : $highestLevel + 10), 'perks' => []]);
+    }
+
+    public function removeStatSet(int $index): void
+    {
+        $this->stats = Lst::filter(fn (array $val, int $idx) => $idx !== $index, $this->stats);
+    }
+
+    public function addPerk(int $index): void
+    {
+        $this->stats[$index]['perks'] = Lst::cons($this->stats[$index]['perks'], ['id' => (string) Str::uuid(), 'perk' => null, 'amount' => 0]);
+    }
+
+    public function removePerk(int $index, int $perkIndex): void
+    {
+        $this->stats[$index]['perks'] = Lst::filter(fn (array $val, int $idx) => $idx !== $perkIndex, $this->stats[$index]['perks']);
+    }
+
+    public function selectedPerks(int $index): array
+    {
+        return Lst::map(fn (array $perk) => intval($perk['perk']), Lst::filter(fn (array $perk) => $perk !== null, $this->stats[$index]['perks']));
     }
 }
