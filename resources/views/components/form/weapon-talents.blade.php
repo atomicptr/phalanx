@@ -36,9 +36,6 @@
                                 @elseif ($option['type'] === \App\Enums\WeaponTalentOptionType::STAT)
                                     <x-input.select label="Stat" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.stat" values="{{ \App\Enums\Stat::class }}" />
                                     <x-input.textfield label="Value" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.value" />
-                                @elseif ($option['type'] === \App\Enums\WeaponTalentOptionType::PERK)
-                                    <x-input.perk-select fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.perk" />
-                                    <x-input.textfield label="Value" fieldName="form.talents.{{ $index }}.options.{{ $optionIndex }}.value" />
                                 @endif
 
                                 <div class="card-actions justify-end mt-4">
