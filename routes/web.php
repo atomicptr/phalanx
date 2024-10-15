@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Permissions;
 use App\Livewire\Page\Admin\Dashboard;
 use App\Livewire\Page\Admin\Items\Armours;
 use App\Livewire\Page\Admin\Items\Weapons;
@@ -24,9 +25,9 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/settings', Settings::class)->name('admin.settings');
 
     // administration
-    Route::get('/admin/patch', Patch\Index::class)->name('admin.patch');
-    Route::get('/admin/patch/new', Patch\Create::class)->name('admin.patch.new');
-    Route::get('/admin/patch/{patch:name}', Patch\Edit::class)->name('admin.patch.edit');
+    Route::get('/admin/patch', Patch\Index::class)->name('admin.patch')->can(Permissions::CAN_PUBLISH->value);
+    Route::get('/admin/patch/new', Patch\Create::class)->name('admin.patch.new')->can(Permissions::CAN_PUBLISH->value);
+    Route::get('/admin/patch/{patch:name}', Patch\Edit::class)->name('admin.patch.edit')->can(Permissions::CAN_PUBLISH->value);
 
     // weapon data
     Route::get('/admin/items/weapons', Weapons\Index::class)->name('admin.items.weapons');

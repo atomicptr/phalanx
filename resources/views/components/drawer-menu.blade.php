@@ -8,31 +8,37 @@
         </a>
     </li>
 
-    <li>
-        <h2 class="menu-title">
-            {{ __("Administration") }}
-        </h2>
-        <ul>
-            <li>
-                <a class="disabled">
-                    <x-heroicon-o-users class="w-6 h-6" />
-                    {{ __("Users") }}
-                </a>
-            </li>
-            <li>
-                <a class="disabled">
-                    <x-heroicon-o-wrench-screwdriver class="w-6 h-6" />
-                    {{ __("API Keys") }}
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("admin.patch")}}" class="{{ \App\Utils\RouteUtil::active("admin.patch") }}" wire:navigate>
-                    <x-heroicon-o-square-2-stack class="w-6 h-6" />
-                    {{ __("Patches") }}
-                </a>
-            </li>
-        </ul>
-    </li>
+    @canany(["is-admin", "can-access-patches"])
+        <li>
+            <h2 class="menu-title">
+                {{ __("Administration") }}
+            </h2>
+            <ul>
+                @can("is-admin")
+                    <li>
+                        <a class="disabled">
+                            <x-heroicon-o-users class="w-6 h-6" />
+                            {{ __("Users") }}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="disabled">
+                            <x-heroicon-o-wrench-screwdriver class="w-6 h-6" />
+                            {{ __("API Keys") }}
+                        </a>
+                    </li>
+                @endcan
+                @can("can-access-patches")
+                    <li>
+                        <a href="{{ route("admin.patch")}}" class="{{ \App\Utils\RouteUtil::active("admin.patch") }}" wire:navigate>
+                            <x-heroicon-o-square-2-stack class="w-6 h-6" />
+                            {{ __("Patches") }}
+                        </a>
+                    </li>
+                @endcan
+            </ul>
+        </li>
+    @endcanany
 
     <li>
         <h2 class="menu-title">
@@ -66,30 +72,32 @@
         </ul>
     </li>
 
-    <li>
-        <h2 class="menu-title">
-            {{ __("Builds") }}
-        </h2>
-        <ul>
-            <li>
-                <a class="disabled">
-                    <x-heroicon-o-question-mark-circle class="w-6 h-6" />
-                    {{ __("Meta Builds") }}
-                </a>
-            </li>
-            <li>
-                <a class="disabled">
-                    <x-heroicon-o-question-mark-circle class="w-6 h-6" />
-                    {{ __("Trial Builds") }}
-                </a>
-            </li>
-            <li>
-                <a class="disabled">
-                    <x-heroicon-o-question-mark-circle class="w-6 h-6" />
-                    {{ __("Progression Builds") }}
-                </a>
-            </li>
-        </ul>
-    </li>
+    @can("can-edit-builds")
+        <li>
+            <h2 class="menu-title">
+                {{ __("Builds") }}
+            </h2>
+            <ul>
+                <li>
+                    <a class="disabled">
+                        <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                        {{ __("Meta Builds") }}
+                    </a>
+                </li>
+                <li>
+                    <a class="disabled">
+                        <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                        {{ __("Trial Builds") }}
+                    </a>
+                </li>
+                <li>
+                    <a class="disabled">
+                        <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                        {{ __("Progression Builds") }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @endcan
 </ul>
 

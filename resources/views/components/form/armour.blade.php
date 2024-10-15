@@ -6,7 +6,7 @@
     <x-input.image-upload label="Icon" fieldName="form.icon" :previewUrl="$form->icon instanceof Livewire\Features\SupportFileUploads\TemporaryUploadedFile ? $form->icon->temporaryUrl() : ($form->icon ? asset($form->icon) : null)" />
     <x-input.select label="Element" fieldName="form.element" values="{{ \App\Enums\Element::class }}" />
 
-    <x-input.select label="Patch" fieldName="form.patch" :values="$patches" />
+    <x-input.patch-select fieldName="form.patch" :values="$patches" />
 
     <x-input.submit />
 </form>

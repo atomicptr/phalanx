@@ -13,7 +13,7 @@
 
     <x-input.textfield label="Threshold" fieldName="form.threshold" />
 
-    <x-input.select label="Patch" fieldName="form.patch" :values="$patches" />
+    <x-input.patch-select fieldName="form.patch" :values="$patches" />
 
     <x-input.submit />
 </form>
