@@ -28,7 +28,6 @@ class Armour extends Model
             'type' => ArmourType::class,
             'element' => Element::class,
             'stats' => 'array',
-            'talents' => 'array',
         ];
     }
 

@@ -11,10 +11,6 @@
                     <x-input.select label="Stat" fieldName="{{ $fieldName }}.{{ $index }}.stat" values="{{ \App\Enums\Stat::class }}" />
                 @endif
 
-                @if ($values[$index]['type'] == \App\Enums\ValueType::PERK)
-                    <x-input.perk-select fieldName="{{ $fieldName }}.{{ $index }}.perk" />
-                @endif
-
                 <x-input.textfield label="Value" fieldName="{{ $fieldName }}.{{ $index }}.value" />
 
                 <div class="card-actions justify-end mt-4">

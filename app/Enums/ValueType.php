@@ -8,7 +8,6 @@ enum ValueType: string implements DisplayAsString
 {
     case CUSTOM = 'custom';
     case STAT = 'stat';
-    case PERK = 'perk';
 
     public function hasStatField(): bool
     {
@@ -23,7 +22,6 @@ enum ValueType: string implements DisplayAsString
         return match ($this) {
             self::CUSTOM => 'Custom',
             self::STAT => 'Stat',
-            self::PERK => 'Perk',
             default => $this->value,
         };
     }
