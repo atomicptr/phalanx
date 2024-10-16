@@ -22,8 +22,8 @@
                         </a>
                     </li>
                     <li>
-                        <a class="disabled">
-                            <x-heroicon-o-wrench-screwdriver class="w-6 h-6" />
+                        <a href="{{ route("admin.api-key") }}" class="{{ \App\Utils\RouteUtil::active("admin.api-key") }}" wire:navigate>
+                            <x-heroicon-o-key class="w-6 h-6" />
                             {{ __("API Keys") }}
                         </a>
                     </li>
