@@ -25,11 +25,11 @@ class VersionUtil
         [$v1Major, $v1Minor, $v1Patch] = static::parse($version1);
         [$v2Major, $v2Minor, $v2Patch] = static::parse($version2);
 
-        if ($res = ($v1Major <=> $v2Major) !== 0) {
+        if (($res = $v1Major <=> $v2Major) !== 0) {
             return $res;
         }
 
-        if ($res = ($v1Minor <=> $v2Minor) !== 0) {
+        if (($res = $v1Minor <=> $v2Minor) !== 0) {
             return $res;
         }
 

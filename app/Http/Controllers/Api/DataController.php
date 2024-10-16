@@ -11,6 +11,7 @@ use App\Models\Armour;
 use App\Models\Patch;
 use App\Models\Perk;
 use App\Models\Weapon;
+use App\Utils\VersionUtil;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DataController extends Controller
@@ -20,11 +21,13 @@ class DataController extends Controller
         $patch = Patch::where(['live' => true])->first();
         assert($patch instanceof Patch);
 
+        $patchFilterFunc = fn (Armour|Weapon|Perk $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
+
         return [
             'patch' => PatchResource::make($patch),
-            'armours' => $this->collectionToObject(ArmourResource::collection(Armour::all())),
-            'weapons' => $this->collectionToObject(WeaponResource::collection(Weapon::all())),
-            'perks' => $this->collectionToObject(PerkResource::collection(Perk::all())),
+            'armours' => $this->collectionToObject(ArmourResource::collection(Armour::all()->filter($patchFilterFunc))),
+            'weapons' => $this->collectionToObject(WeaponResource::collection(Weapon::all()->filter($patchFilterFunc))),
+            'perks' => $this->collectionToObject(PerkResource::collection(Perk::all()->filter($patchFilterFunc))),
         ];
     }
 
