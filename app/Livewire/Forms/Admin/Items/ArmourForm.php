@@ -61,7 +61,7 @@ class ArmourForm extends Form
     {
         $this->stats = Lst::sort(fn (array $a, array $b) => $a['min_level'] <=> $b['min_level'], $this->stats);
         $highestLevel = Lst::length($this->stats) > 0 ? Lst::last($this->stats)['min_level'] : 0;
-        $this->stats = Lst::cons($this->stats, ['id' => (string) Str::uuid(), 'min_level' => (Lst::isEmpty($this->stats) ? 0 : $highestLevel + 10), 'perks' => []]);
+        $this->stats = Lst::cons($this->stats, ['id' => (string) Str::uuid(), 'min_level' => (Lst::isEmpty($this->stats) ? 1 : ($highestLevel === 1 ? 0 : $highestLevel) + 5), 'perks' => []]);
     }
 
     public function removeStatSet(int $index): void
