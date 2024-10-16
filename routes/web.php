@@ -8,6 +8,7 @@ use App\Livewire\Page\Admin\Items\Weapons;
 use App\Livewire\Page\Admin\Misc\Perks;
 use App\Livewire\Page\Admin\Patch;
 use App\Livewire\Page\Admin\Settings;
+use App\Livewire\Page\Admin\User;
 use App\Livewire\Page\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/settings', Settings::class)->name('admin.settings');
 
     ////// Administration
+
+    // users
+    Route::get('/admin/user', User\Index::class)->name('admin.user')->can('is-admin');
+    Route::get('/admin/user/new', User\Create::class)->name('admin.user.new')->can('is-admin');
+    Route::get('/admin/user/{user}', User\Edit::class)->name('admin.user.edit')->can('is-admin');
 
     // api keys
     Route::get('/admin/api-key', ApiKey\Index::class)->name('admin.api-key')->can('is-admin');

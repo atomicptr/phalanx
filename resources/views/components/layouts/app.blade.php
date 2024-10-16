@@ -5,7 +5,7 @@
         <div class="drawer-content flex flex-col">
             <x-navbar />
 
-            <div class="p-2">
+            <div class="p-2 container mx-auto">
                 <x-flash-messages />
 
                 {{ $slot }}

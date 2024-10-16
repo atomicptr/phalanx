@@ -16,7 +16,7 @@
             <ul>
                 @can("is-admin")
                     <li>
-                        <a class="disabled">
+                        <a href="{{ route("admin.user") }}" class="{{ \App\Utils\RouteUtil::active("admin.user") }}" wire:navigate>
                             <x-heroicon-o-users class="w-6 h-6" />
                             {{ __("Users") }}
                         </a>

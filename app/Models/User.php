@@ -20,6 +20,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'can_publish',
+        'can_access_confidential',
+        'can_access_patches',
+        'can_edit_builds',
+        'can_edit_data',
     ];
 
     /**
