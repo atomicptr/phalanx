@@ -141,7 +141,7 @@ class WeaponsForm extends Form
         return array_values($newTalents);
     }
 
-    protected function grabFormData(): array
+    private function grabFormData(): array
     {
         if ($this->icon instanceof TemporaryUploadedFile) {
             $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));

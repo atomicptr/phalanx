@@ -56,6 +56,15 @@ return [
             'throw' => false,
         ],
 
+        'github' => [
+            'driver' => 'github',
+            'token' => env('GITHUB_STORAGE_TOKEN', ''),
+            'username' => env('GITHUB_STORAGE_USERNAME', ''),
+            'repository' => env('GITHUB_STORAGE_REPOSITORY', ''),
+            'branch' => env('GITHUB_STORAGE_BRANCH', 'master'),
+            'prefix' => env('GITHUB_STORAGE_PREFIX', ''),
+        ],
+
     ],
 
     /*

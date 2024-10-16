@@ -43,18 +43,30 @@ class ArmourForm extends Form
         $this->patch = $armour->patch;
     }
 
+    private function grabFormData(): array
+    {
+        if ($this->icon instanceof TemporaryUploadedFile) {
+            $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
+            $this->icon = $this->icon->storeAs(path: 'uploads/icons/armours', name: Str::slug($this->name).$ext, options: [
+                'disk' => getenv('APP_UPLOAD_DISK', 'public'),
+            ]);
+        }
+
+        return $this->all();
+    }
+
     // TODO: validate stats
 
     public function store()
     {
         $this->validate();
-        Armour::create($this->all());
+        Armour::create($this->grabFormData());
     }
 
     public function update()
     {
         $this->validate();
-        $this->armour->update($this->all());
+        $this->armour->update($this->grabFormData());
     }
 
     public function addStatSet(): void
