@@ -5,6 +5,7 @@ namespace App\Livewire\Forms\Admin\Items;
 use App\Enums\ArmourType;
 use App\Enums\Element;
 use App\Models\Armour;
+use App\Utils\UploadUtil;
 use Atomicptr\Functional\Lst;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
@@ -13,6 +14,8 @@ use Livewire\Form;
 
 class ArmourForm extends Form
 {
+    private const UPLOAD_PATH = 'uploads/icons/armours';
+
     public ?Armour $armour = null;
 
     #[Validate('required')]
@@ -47,9 +50,7 @@ class ArmourForm extends Form
     {
         if ($this->icon instanceof TemporaryUploadedFile) {
             $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
-            $this->icon = $this->icon->storeAs(path: 'uploads/icons/armours', name: Str::slug($this->name).$ext, options: [
-                'disk' => getenv('APP_UPLOAD_DISK', 'public'),
-            ]);
+            $this->icon = UploadUtil::upload($this->icon, static::UPLOAD_PATH, Str::slug($this->name).$ext)->orElse(null);
         }
 
         return $this->all();

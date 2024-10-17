@@ -18,6 +18,7 @@ web_environment:
     - DB_DATABASE=db
     - DB_USERNAME=db
     - DB_PASSWORD=db
+    - TRUST_ALL_PROXIES=true
 corepack_enable: false
 
 # Key features of DDEV's config.yaml:

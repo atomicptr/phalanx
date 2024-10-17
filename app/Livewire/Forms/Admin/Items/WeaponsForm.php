@@ -8,6 +8,7 @@ use App\Enums\WeaponTalentOptionType;
 use App\Enums\WeaponType;
 use App\Models\Weapon;
 use App\Rules\ContainsValuesRule;
+use App\Utils\UploadUtil;
 use App\Utils\ValuesUtil;
 use Atomicptr\Functional\Lst;
 use Illuminate\Support\Str;
@@ -17,6 +18,8 @@ use Livewire\Form;
 
 class WeaponsForm extends Form
 {
+    private const UPLOAD_PATH = 'uploads/icons/weapons';
+
     public ?Weapon $weapon = null;
 
     #[Validate('required')]
@@ -145,9 +148,7 @@ class WeaponsForm extends Form
     {
         if ($this->icon instanceof TemporaryUploadedFile) {
             $ext = '.'.Lst::last(explode('.', $this->icon->getFilename()));
-            $this->icon = $this->icon->storeAs(path: 'uploads/icons/weapons', name: Str::slug($this->name).$ext, options: [
-                'disk' => getenv('APP_UPLOAD_DISK', 'public'),
-            ]);
+            $this->icon = UploadUtil::upload($this->icon, static::UPLOAD_PATH, Str::slug($this->name).$ext)->orElse(null);
         }
 
         $this->specialValues = ValuesUtil::clean($this->specialValues);
