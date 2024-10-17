@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ForceHttps;
 use App\Http\Middleware\HasValidApiKey;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         }
 
         $middleware->append([
+            ForceHttps::class,
             HasValidApiKey::class,
         ]);
     })
