@@ -5,6 +5,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>{{ __("Avatar") }}</th>
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Is Administrator") }}</th>
                     <th>{{ __("Can Publish Builds") }}</th>
@@ -18,6 +19,13 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr>
+                        <td>
+                            <div class="avatar">
+                                <div class="mask mask-squircle h-12 w-12">
+                                    <img src="{{ $user->gravatarUrl()  }}" />
+                                </div>
+                            </div>
+                        </td>
                         <td>
                             <a href="{{ route("admin.user.edit", ["user" => $user]) }}" class="font-bold" wire:navigate>
                                 {{ $user->name }}
