@@ -5,6 +5,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th width="64"></th>
                     <th>{{ __("Name") }}</th>
                     <th width="32"></th>
                 </tr>
@@ -12,6 +13,9 @@
             <tbody>
                 @foreach ($perks as $perk)
                     <tr>
+                        <td>
+                            <img class="w-8 h-8" src="{{ $perk->type->icon() }}" />
+                        </td>
                         <td>
                             <a href="{{ route("admin.misc.perks.edit", ['perk' => $perk->id])}}" class="font-bold" wire:navigate>
                                 {{ $perk->name }}

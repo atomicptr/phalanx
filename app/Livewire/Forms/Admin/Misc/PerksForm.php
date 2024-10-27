@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms\Admin\Misc;
 
+use App\Enums\PerkType;
 use App\Models\Perk;
 use App\Rules\ContainsValuesRule;
 use App\Utils\ValuesUtil;
@@ -14,6 +15,8 @@ class PerksForm extends Form
 
     #[Validate('required')]
     public string $name = '';
+
+    public PerkType $type = PerkType::ALACRITY;
 
     public string $effect = '';
 
@@ -35,6 +38,7 @@ class PerksForm extends Form
         $this->perk = $perk;
 
         $this->name = $perk->name;
+        $this->type = $perk->type;
         $this->effect = $perk->effect;
         $this->values = ValuesUtil::prepare($perk->values);
         $this->threshold = $perk->threshold;

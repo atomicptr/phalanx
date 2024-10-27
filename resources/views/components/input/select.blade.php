@@ -5,25 +5,31 @@
         <span class="label-text">{{ __($label) }}</span>
     </div>
 
-    <select class="select select-bordered w-full max-w-lg @error($fieldName) select-error @enderror" wire:model.change="{{ $fieldName }}">
-        @if (is_array($values))
-            @foreach ($values as $key => $value)
-                <option value="{{ $key }}">
-                    {{ $value }}
-                </option>
-            @endforeach
-        @elseif (enum_exists($values))
-            @foreach ($values::cases() as $case)
-                <option value="{{ $case->value }}">
-                    @if ($case instanceof \App\Contracts\DisplayAsString)
-                        {{ __($case->displayString()) }}
-                    @else
-                        {{ $case->value }}
-                    @endif
-                </option>
-            @endforeach
+    <div class="flex flex-row gap-2 items-center">
+        <select class="select select-bordered w-full max-w-lg @error($fieldName) select-error @enderror" wire:model.change="{{ $fieldName }}">
+            @if (is_array($values))
+                @foreach ($values as $key => $value)
+                    <option value="{{ $key }}">
+                        {{ $value }}
+                    </option>
+                @endforeach
+            @elseif (enum_exists($values))
+                @foreach ($values::cases() as $case)
+                    <option value="{{ $case->value }}">
+                        @if ($case instanceof \App\Contracts\DisplayAsString)
+                            {{ __($case->displayString()) }}
+                        @else
+                            {{ $case->value }}
+                        @endif
+                    </option>
+                @endforeach
+            @endif
+        </select>
+
+        @if (enum_exists($values) && is_subclass_of($values, \App\Contracts\HasIcon::class))
+            <img class="w-8 h-8" src="{{ $this->form->type->icon() }}" />
         @endif
-    </select>
+    </div>
 
     @error($fieldName)
         <div class="label">

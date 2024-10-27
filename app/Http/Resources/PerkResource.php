@@ -17,6 +17,7 @@ class PerkResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'type' => $this->type,
             'effect' => $this->effect,
             'values' => ValuesResource::make($this->values),
             'threshold' => $this->threshold,

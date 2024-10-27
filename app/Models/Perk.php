@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PerkType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,7 @@ class Perk extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'effect',
         'values',
         'threshold',
@@ -19,6 +21,7 @@ class Perk extends Model
     ];
 
     protected $casts = [
+        'type' => PerkType::class,
         'values' => 'array',
     ];
 

@@ -1,6 +1,7 @@
 <form wire:submit="save">
 
     <x-input.textfield label="Name" fieldName="form.name" />
+    <x-input.select label="Type" fieldName="form.type" values="{{ \App\Enums\PerkType::class }}" />
     <x-input.textarea label="Effect" fieldName="form.effect" />
 
     <div class="max-w-lg">
