@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="disabled">
+                    <a href="{{ route("admin.items.lantern-cores")}}" class="{{ \App\Utils\RouteUtil::active("admin.items.lantern-cores") }}" wire:navigate>
                         <img src="{{ asset("icons/lantern.png") }}" class="w-6 h-6" />
                         {{ __("Lantern Cores") }}
                     </a>

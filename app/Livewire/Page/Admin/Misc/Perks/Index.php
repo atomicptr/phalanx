@@ -11,7 +11,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->perks = Perk::all()->all(); // TODO check confidentiality
+        $this->perks = Perk::all()->all();
     }
 
     public function render()
