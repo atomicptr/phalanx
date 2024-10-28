@@ -13,19 +13,19 @@ class LanternCore extends Model
     protected $fillable = [
         'name',
         'icon',
-        'active_icon',
+        'activeIcon',
         'active',
-        'active_values',
+        'activeValues',
         'passive',
-        'passive_values',
+        'passiveValues',
         'patch',
     ];
 
     protected function casts(): array
     {
         return [
-            'active_values' => 'array',
-            'passive_values' => 'array',
+            'activeValues' => 'array',
+            'passiveValues' => 'array',
         ];
     }
 

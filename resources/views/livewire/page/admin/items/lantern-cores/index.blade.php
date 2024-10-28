@@ -5,7 +5,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th width="64"></th>
+                    <th width="140">{{ __("Icons") }}</th>
                     <th>{{ __("Name") }}</th>
                     <th width="32"></th>
                 </tr>
@@ -17,6 +17,11 @@
                             <div class="avatar">
                                 <div class="mask mask-squircle h-12 w-12">
                                     <img src="{{ asset($lanternCore->icon ?? "icons/noicon.png") }}" />
+                                </div>
+                            </div>
+                            <div class="avatar">
+                                <div class="mask mask-squircle h-12 w-12">
+                                    <img src="{{ asset($lanternCore->activeIcon ?? "icons/noicon.png") }}" />
                                 </div>
                             </div>
                         </td>

@@ -23,15 +23,15 @@ class LanternCoreForm extends Form
 
     public TemporaryUploadedFile|string|null $icon = null;
 
-    public TemporaryUploadedFile|string|null $active_icon = null;
+    public TemporaryUploadedFile|string|null $activeIcon = null;
 
     public ?string $active = null;
 
-    public array $active_values = [];
+    public array $activeValues = [];
 
     public ?string $passive = null;
 
-    public array $passive_values = [];
+    public array $passiveValues = [];
 
     public ?int $patch = null;
 
@@ -41,19 +41,19 @@ class LanternCoreForm extends Form
 
         $this->name = $lanternCore->name;
         $this->icon = $lanternCore->icon;
-        $this->active_icon = $lanternCore->active_icon;
+        $this->activeIcon = $lanternCore->activeIcon;
         $this->active = $lanternCore->active;
-        $this->active_values = ValuesUtil::prepare($lanternCore->active_values);
+        $this->activeValues = ValuesUtil::prepare($lanternCore->activeValues);
         $this->passive = $lanternCore->passive;
-        $this->passive_values = ValuesUtil::prepare($lanternCore->passive_values);
+        $this->passiveValues = ValuesUtil::prepare($lanternCore->passiveValues);
         $this->patch = $lanternCore->patch;
     }
 
     public function rules()
     {
         return [
-            'active' => new ContainsValuesRule($this->active_values),
-            'passive' => new ContainsValuesRule($this->passive_values),
+            'active' => new ContainsValuesRule($this->activeValues),
+            'passive' => new ContainsValuesRule($this->passiveValues),
         ];
     }
 
@@ -65,12 +65,12 @@ class LanternCoreForm extends Form
         }
 
         if ($this->icon instanceof TemporaryUploadedFile) {
-            $ext = '.'.Lst::last(explode('.', $this->active_icon->getFilename()));
-            $this->active_icon = UploadUtil::upload($this->active_icon, static::UPLOAD_PATH, Str::slug($this->name).'-active'.$ext)->orElse(null);
+            $ext = '.'.Lst::last(explode('.', $this->activeIcon->getFilename()));
+            $this->activeIcon = UploadUtil::upload($this->activeIcon, static::UPLOAD_PATH, Str::slug($this->name).'-active'.$ext)->orElse(null);
         }
 
-        $this->active_values = ValuesUtil::clean($this->active_values);
-        $this->passive_values = ValuesUtil::clean($this->passive_values);
+        $this->activeValues = ValuesUtil::clean($this->activeValues);
+        $this->passiveValues = ValuesUtil::clean($this->passiveValues);
 
         return $this->all();
     }
@@ -89,21 +89,21 @@ class LanternCoreForm extends Form
 
     public function addActiveValue()
     {
-        $this->active_values = ValuesUtil::add($this->active_values);
+        $this->activeValues = ValuesUtil::add($this->activeValues);
     }
 
     public function deleteActive(int $index)
     {
-        $this->active_values = ValuesUtil::remove($this->active_values, $index);
+        $this->activeValues = ValuesUtil::remove($this->activeValues, $index);
     }
 
     public function addPassiveValue()
     {
-        $this->passive_values = ValuesUtil::add($this->passive_values);
+        $this->passiveValues = ValuesUtil::add($this->passiveValues);
     }
 
     public function deletePassive(int $index)
     {
-        $this->passive_values = ValuesUtil::remove($this->passive_values, $index);
+        $this->passiveValues = ValuesUtil::remove($this->passiveValues, $index);
     }
 }
