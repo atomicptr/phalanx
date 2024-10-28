@@ -7,6 +7,7 @@
                 <tr>
                     <th width="140">{{ __("Icons") }}</th>
                     <th>{{ __("Name") }}</th>
+                    <th>{{ __("Ability") }}</th>
                     <th width="32"></th>
                 </tr>
             </thead>
@@ -29,6 +30,9 @@
                             <a href="{{ route("admin.items.lantern-cores.edit", ['lanternCore' => $lanternCore->id])}}" class="font-bold" wire:navigate>
                                 {{ $lanternCore->name }}
                             </a>
+                        </td>
+                        <td>
+                            {{ $lanternCore->activeTitle }}
                         </td>
                         <td>
                             <div class="join">

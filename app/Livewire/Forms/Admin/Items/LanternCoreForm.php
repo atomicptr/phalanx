@@ -31,6 +31,8 @@ class LanternCoreForm extends Form
 
     public array $activeValues = [];
 
+    public ?int $activeCooldown = null;
+
     public ?string $passive = null;
 
     public array $passiveValues = [];
@@ -47,6 +49,7 @@ class LanternCoreForm extends Form
         $this->active = $lanternCore->active;
         $this->activeTitle = $lanternCore->activeTitle;
         $this->activeValues = ValuesUtil::prepare($lanternCore->activeValues);
+        $this->activeCooldown = $lanternCore->activeCooldown;
         $this->passive = $lanternCore->passive;
         $this->passiveValues = ValuesUtil::prepare($lanternCore->passiveValues);
         $this->patch = $lanternCore->patch;

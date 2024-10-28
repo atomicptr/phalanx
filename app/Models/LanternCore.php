@@ -17,6 +17,7 @@ class LanternCore extends Model
         'active',
         'activeTitle',
         'activeValues',
+        'activeCooldown',
         'passive',
         'passiveValues',
         'patch',
