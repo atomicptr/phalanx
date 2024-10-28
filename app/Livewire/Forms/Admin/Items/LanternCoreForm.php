@@ -37,6 +37,8 @@ class LanternCoreForm extends Form
 
     public array $passiveValues = [];
 
+    public ?string $passiveTitle = null;
+
     public ?int $patch = null;
 
     public function setLanternCore(LanternCore $lanternCore): void
@@ -52,6 +54,7 @@ class LanternCoreForm extends Form
         $this->activeCooldown = $lanternCore->activeCooldown;
         $this->passive = $lanternCore->passive;
         $this->passiveValues = ValuesUtil::prepare($lanternCore->passiveValues);
+        $this->passiveTitle = $lanternCore->passiveTitle;
         $this->patch = $lanternCore->patch;
     }
 

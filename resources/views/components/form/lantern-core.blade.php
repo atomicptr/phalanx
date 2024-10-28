@@ -14,6 +14,7 @@
 
     <h2 class="text-xl mt-8 mb-4">{{ __("Passive Ability")}}</h2>
 
+    <x-input.textfield label="Title" fieldName="form.passiveTitle" />
     <x-input.textarea label="Description" fieldName="form.passive" />
     <x-input.values-repeater :values="$form->passiveValues" fieldName="form.passiveValues" addFunc="addPassiveValue" deleteFunc="deletePassive" />
 

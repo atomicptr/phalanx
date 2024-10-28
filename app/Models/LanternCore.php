@@ -20,6 +20,7 @@ class LanternCore extends Model
         'activeCooldown',
         'passive',
         'passiveValues',
+        'passiveTitle',
         'patch',
     ];
 
