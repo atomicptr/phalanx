@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Armour;
+use App\Service\TranslationService;
 use App\Utils\NumberUtil;
 use Atomicptr\Functional\Lst;
 use Illuminate\Http\Request;
@@ -13,7 +15,7 @@ class ArmourResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => TranslationService::i18n(Armour::class, $this->id, 'name', $this->name),
             'type' => $this->type,
             'icon' => $this->icon,
             'element' => $this->element,

@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\LanternCore;
+use App\Service\TranslationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,23 +18,23 @@ class LanternCoreResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => TranslationService::i18n(LanternCore::class, $this->id, 'name', $this->name),
             'icon' => $this->icon,
             'active_icon' => $this->activeIcon,
-            'active' => $this->makeAbility($this->activeTitle, $this->active, $this->activeValues),
-            'passive' => $this->makeAbility($this->passiveTitle, $this->passive, $this->passiveValues),
+            'active' => $this->makeAbility($this->activeTitle, $this->active, $this->activeValues, 'active'),
+            'passive' => $this->makeAbility($this->passiveTitle, $this->passive, $this->passiveValues, 'passive'),
         ];
     }
 
-    private function makeAbility(?string $title, ?string $description, array $values): ?array
+    private function makeAbility(?string $title, ?string $description, array $values, string $abilityIdent): ?array
     {
         if (empty($description)) {
             return null;
         }
 
         return [
-            'title' => $title,
-            'description' => $description,
+            'title' => TranslationService::i18n(LanternCore::class, $this->id, $abilityIdent.'Title', $title),
+            'description' => TranslationService::i18n(LanternCore::class, $this->id, $abilityIdent.'Description', $description),
             'values' => ValuesResource::make($values),
         ];
     }

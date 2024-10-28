@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use App\Enums\Stat;
 use App\Enums\ValueType;
+use App\Models\Weapon;
+use App\Service\TranslationService;
 use App\Utils\NumberUtil;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,7 +17,7 @@ class WeaponResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => TranslationService::i18n(Weapon::class, $this->id, 'name', $this->name),
             'type' => $this->type,
             'icon' => $this->icon,
             'element' => $this->element,
@@ -37,8 +39,8 @@ class WeaponResource extends JsonResource
         }
 
         return [
-            'name' => $name,
-            'description' => $desc,
+            'name' => TranslationService::i18n(Weapon::class, $this->id, $abilityName.'Name', $name),
+            'description' => TranslationService::i18n(Weapon::class, $this->id, $abilityName.'Description', $desc),
             'values' => ValuesResource::make($values),
         ];
     }
@@ -57,7 +59,7 @@ class WeaponResource extends JsonResource
             }
 
             $res[$row] = [
-                'name' => $talents[$row]['name'] ?? null,
+                'name' => TranslationService::i18n(Weapon::class, $this->id, "talentName_$row", $talents[$row]['name'] ?? null),
                 'options' => [],
             ];
 
@@ -72,7 +74,7 @@ class WeaponResource extends JsonResource
 
                 $res[$row]['options'][$col] = [
                     'name' => $options[$col]['name'] ?? null,
-                    ...$this->parseTalentValue($options[$col]),
+                    ...$this->parseTalentValue($options[$col], $row, $col),
                 ];
             }
         }
@@ -80,12 +82,12 @@ class WeaponResource extends JsonResource
         return $res;
     }
 
-    private function parseTalentValue(array $value): array
+    private function parseTalentValue(array $value, int $row, int $col): array
     {
         return match (ValueType::from($value['type'])) {
             ValueType::CUSTOM => [
                 'type' => $value['type'],
-                'description' => $value['description'],
+                'description' => TranslationService::i18n(Weapon::class, $this->id, "talentValue_{$row}_{$col}", $value['description']),
                 'values' => ValuesResource::make($value['values']),
             ],
             ValueType::STAT => [
