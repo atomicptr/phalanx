@@ -27,8 +27,6 @@ class WeaponsForm extends Form
 
     public WeaponType $type = WeaponType::AETHER_STRIKERS;
 
-    public ?string $description = null;
-
     public TemporaryUploadedFile|string|null $icon = null;
 
     public Element $element = Element::BLAZE;
@@ -71,7 +69,6 @@ class WeaponsForm extends Form
 
         $this->name = $weapon->name;
         $this->type = $weapon->type;
-        $this->description = $weapon->description;
         $this->icon = $weapon->icon;
         $this->element = $weapon->element;
         $this->specialName = $weapon->specialName;

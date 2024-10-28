@@ -23,8 +23,6 @@ class ArmourForm extends Form
 
     public ArmourType $type = ArmourType::HEAD;
 
-    public ?string $description = null;
-
     public TemporaryUploadedFile|string|null $icon = null;
 
     public Element $element = Element::BLAZE;
@@ -39,7 +37,6 @@ class ArmourForm extends Form
 
         $this->name = $armour->name;
         $this->type = $armour->type;
-        $this->description = $armour->description;
         $this->icon = $armour->icon;
         $this->element = $armour->element;
         $this->stats = $armour->stats ?? [];

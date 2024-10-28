@@ -14,7 +14,6 @@ class ArmourResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
             'type' => $this->type,
             'icon' => $this->icon,
             'element' => $this->element,
