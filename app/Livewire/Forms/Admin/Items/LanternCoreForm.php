@@ -64,7 +64,7 @@ class LanternCoreForm extends Form
             $this->icon = UploadUtil::upload($this->icon, static::UPLOAD_PATH, Str::slug($this->name).$ext)->orElse(null);
         }
 
-        if ($this->icon instanceof TemporaryUploadedFile) {
+        if ($this->activeIcon instanceof TemporaryUploadedFile) {
             $ext = '.'.Lst::last(explode('.', $this->activeIcon->getFilename()));
             $this->activeIcon = UploadUtil::upload($this->activeIcon, static::UPLOAD_PATH, Str::slug($this->name).'-active'.$ext)->orElse(null);
         }
