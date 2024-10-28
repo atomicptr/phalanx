@@ -15,6 +15,7 @@ class LanternCore extends Model
         'icon',
         'activeIcon',
         'active',
+        'activeTitle',
         'activeValues',
         'passive',
         'passiveValues',

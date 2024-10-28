@@ -19,18 +19,19 @@ class LanternCoreResource extends JsonResource
             'name' => $this->name,
             'icon' => $this->icon,
             'active_icon' => $this->activeIcon,
-            'active' => $this->makeAbility($this->active, $this->activeValues),
-            'passive' => $this->makeAbility($this->passive, $this->passiveValues),
+            'active' => $this->makeAbility($this->activeTitle, $this->active, $this->activeValues),
+            'passive' => $this->makeAbility(null, $this->passive, $this->passiveValues),
         ];
     }
 
-    private function makeAbility(?string $description, array $values): ?array
+    private function makeAbility(?string $title, ?string $description, array $values): ?array
     {
         if (empty($description)) {
             return null;
         }
 
         return [
+            'title' => $title,
             'description' => $description,
             'values' => ValuesResource::make($values),
         ];

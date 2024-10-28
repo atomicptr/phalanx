@@ -6,6 +6,7 @@
     <x-input.image-upload label="Active Icon" fieldName="form.activeIcon" :previewUrl="$form->activeIcon instanceof Livewire\Features\SupportFileUploads\TemporaryUploadedFile ? $form->activeIcon->temporaryUrl() : ($form->activeIcon ? asset($form->activeIcon) : null)" />
 
     <x-input.textarea label="Active" fieldName="form.active" />
+    <x-input.textfield label="Active Title" fieldName="form.activeTitle" />
     <x-input.values-repeater :values="$form->activeValues" fieldName="form.activeValues" addFunc="addActiveValue" deleteFunc="deleteActive" />
 
     <x-input.textarea label="Passive" fieldName="form.passive" />
