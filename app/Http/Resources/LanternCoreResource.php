@@ -20,7 +20,7 @@ class LanternCoreResource extends JsonResource
             'icon' => $this->icon,
             'active_icon' => $this->activeIcon,
             'active' => $this->makeAbility($this->activeTitle, $this->active, $this->activeValues),
-            'passive' => $this->makeAbility(null, $this->passive, $this->passiveValues),
+            'passive' => $this->makeAbility($this->passiveTitle, $this->passive, $this->passiveValues),
         ];
     }
 
