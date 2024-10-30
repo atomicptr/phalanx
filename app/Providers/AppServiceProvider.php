@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Armour;
+use App\Models\LanternCore;
 use App\Models\Patch;
 use App\Models\Perk;
 use App\Models\Scopes\ConfidentialScope;
@@ -27,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Patch::addGlobalScope(new ConfidentialScope);
         Weapon::addGlobalScope(new ConfidentialScope);
         Armour::addGlobalScope(new ConfidentialScope);
-        // TODO: lantern cores
+        LanternCore::addGlobalScope(new ConfidentialScope);
         Perk::addGlobalScope(new ConfidentialScope);
     }
 }
