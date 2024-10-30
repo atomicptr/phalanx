@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Page\Admin\ApiKey;
 
+use App\Enums\Permissions;
 use App\Models\ApiKey;
+use App\Service\PermissionService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Index extends Component
@@ -21,6 +24,8 @@ class Index extends Component
 
     public function delete(ApiKey $apiKey)
     {
+        PermissionService::can(Auth::user(), Permissions::CAN_DELETE_ENTRIES);
+
         $apiKey->delete();
         $this->redirectRoute('admin.api-key'); // better way to handle this?
     }

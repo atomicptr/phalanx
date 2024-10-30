@@ -34,9 +34,11 @@
                                 <a class="btn join-item" href="{{ route("admin.items.weapons.edit", ['weapon' => $weapon->id])}}" wire:navigate>
                                     <x-heroicon-o-pencil class="w-6 h-6" />
                                 </a>
-                                <a class="btn join-item" wire:click="delete({{ $weapon->id }})" wire:confirm="{{ __("Are you sure you want to delete this weapon?")}}">
-                                    <x-heroicon-o-trash class="w-6 h-6" />
-                                </a>
+                                @can("can-delete")
+                                    <button class="btn join-item" wire:click="delete({{ $weapon->id }})" wire:confirm="{{ __("Are you sure you want to delete this weapon?")}}">
+                                        <x-heroicon-o-trash class="w-6 h-6" />
+                                    </button>
+                                @endcan
                             </div>
                         </td>
                     </tr>

@@ -22,9 +22,11 @@
                                 <a class="btn join-item" href="{{ route("admin.api-key.edit", ["apiKey" => $apiKey]) }}" wire:navigate>
                                     <x-heroicon-o-pencil class="w-6 h-6" />
                                 </a>
-                                <button class="btn join-item" wire:click="delete({{ $apiKey->id }})" wire:confirm="{{ __("Are you sure you want to delete this API Key?")}}">
-                                    <x-heroicon-o-trash class="w-6 h-6" />
-                                </button>
+                                @can("can-delete")
+                                    <button class="btn join-item" wire:click="delete({{ $apiKey->id }})" wire:confirm="{{ __("Are you sure you want to delete this API Key?")}}">
+                                        <x-heroicon-o-trash class="w-6 h-6" />
+                                    </button>
+                                @endcan
                             </div>
                         </td>
                     </tr>

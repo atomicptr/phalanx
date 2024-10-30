@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Page\Admin\Items\LanternCores;
 
+use App\Enums\Permissions;
 use App\Models\LanternCore;
+use App\Service\PermissionService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Index extends Component
@@ -21,7 +24,9 @@ class Index extends Component
 
     public function delete(LanternCore $perk)
     {
+        PermissionService::can(Auth::user(), Permissions::CAN_DELETE_ENTRIES);
+
         $perk->delete();
-        $this->redirectRoute('admin.misc.lantern-cores'); // better way to handle this?
+        $this->redirectRoute('admin.items.lantern-cores'); // better way to handle this?
     }
 }

@@ -17,6 +17,7 @@ final class PermissionService
         self::defineGate(Permissions::CAN_ACCESS_PATCHES);
         self::defineGate(Permissions::CAN_EDIT_BUILDS);
         self::defineGate(Permissions::CAN_EDIT_DATA);
+        self::defineGate(Permissions::CAN_DELETE_ENTRIES);
     }
 
     private static function defineGate(Permissions $perm): void
@@ -40,6 +41,7 @@ final class PermissionService
             Permissions::CAN_ACCESS_PATCHES => $user->can_access_patches,
             Permissions::CAN_EDIT_BUILDS => $user->can_edit_builds,
             Permissions::CAN_EDIT_DATA => $user->can_edit_data,
+            Permissions::CAN_DELETE_ENTRIES => $user->is_admin,
         };
     }
 }
