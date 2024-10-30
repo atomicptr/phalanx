@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable as IsAuditable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Patch extends Model
+class Patch extends Model implements Auditable
 {
     use HasFactory;
+    use IsAuditable;
 
     protected $fillable = [
         'name',
