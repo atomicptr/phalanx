@@ -6,7 +6,7 @@ final class TranslationService
 {
     public static function i18n(string $model, int $id, string $field, ?string $default): ?array
     {
-        if ($default === null) {
+        if (empty($default)) {
             return null;
         }
 
