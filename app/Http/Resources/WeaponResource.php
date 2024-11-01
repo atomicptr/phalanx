@@ -53,7 +53,10 @@ class WeaponResource extends JsonResource
 
         for ($row = 0; $row < 5; $row++) {
             if (! isset($talents[$row])) {
-                $res[$row] = [null, null, null, null, null];
+                $res[$row] = [
+                    'name' => null,
+                    'options' => [null, null, null, null, null],
+                ];
 
                 continue;
             }
