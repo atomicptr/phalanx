@@ -21,6 +21,7 @@ class LanternCoreResource extends JsonResource
             'name' => TranslationService::i18n(LanternCore::class, $this->id, 'name', $this->name),
             'icon' => $this->icon,
             'active_icon' => $this->activeIcon,
+            'active_cooldown' => $this->activeCooldown,
             'active' => $this->makeAbility($this->activeTitle, $this->active, $this->activeValues, 'active'),
             'passive' => $this->makeAbility($this->passiveTitle, $this->passive, $this->passiveValues, 'passive'),
         ];
