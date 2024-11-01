@@ -2,21 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ArmourResource;
-use App\Http\Resources\LanternCoreResource;
-use App\Http\Resources\PatchResource;
-use App\Http\Resources\PerkResource;
-use App\Http\Resources\WeaponResource;
 use App\Enums\ArmourType;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PatchResource;
 use App\Models\Armour;
-use App\Models\LanternCore;
 use App\Models\Patch;
-use App\Models\Perk;
-use App\Models\Weapon;
-use App\Utils\VersionUtil;
 use Atomicptr\Functional\Lst;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class IndexedArmourDataController extends Controller
 {
@@ -25,12 +16,10 @@ class IndexedArmourDataController extends Controller
         $patch = Patch::where(['live' => true])->first();
         assert($patch instanceof Patch);
 
-        $patchFilterFunc = fn(Armour|Weapon|Perk|LanternCore $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
-
         $armours = Lst::map(
-            fn(Armour $armour) => [
+            fn (Armour $armour) => [
                 'id' => $armour->id,
-                'perks' => $armour->stats[count($armour->stats) - 1]["perks"],
+                'perks' => $armour->stats[count($armour->stats) - 1]['perks'],
                 'type' => $armour->type,
             ],
             Armour::all()->all(),
@@ -63,10 +52,10 @@ class IndexedArmourDataController extends Controller
     private function addArmour(&$heads, &$torsos, &$arms, &$legs, $armour)
     {
         $tmpPerks = array_map(
-            fn($perk) => [
-                $perk["perk"] => $perk["amount"],
+            fn ($perk) => [
+                $perk['perk'] => $perk['amount'],
             ],
-            $armour["perks"],
+            $armour['perks'],
         );
 
         $perks = [];
@@ -77,14 +66,14 @@ class IndexedArmourDataController extends Controller
         }
 
         $basicArmour = [
-            'id' => $armour["id"],
+            'id' => $armour['id'],
             'perks' => $perks,
         ];
 
-        $armour_perks = array_keys((array)$perks);
+        $armour_perks = array_keys((array) $perks);
         sort($armour_perks);
 
-        switch ($armour["type"]) {
+        switch ($armour['type']) {
             case ArmourType::HEAD:
                 $this->InitialiseDictionary3Perks($heads, $armour_perks[0], $armour_perks[1], $armour_perks[2]);
                 $heads[$armour_perks[0]][$armour_perks[1]][$armour_perks[2]][] = $basicArmour;
@@ -156,23 +145,23 @@ class IndexedArmourDataController extends Controller
 
     private function InitialiseDictionary2Perks(&$dict, $perk1, $perk2)
     {
-        if (!array_key_exists($perk1, $dict)) {
+        if (! array_key_exists($perk1, $dict)) {
             $dict[$perk1] = [];
         }
-        if (!array_key_exists($perk2, $dict[$perk1])) {
+        if (! array_key_exists($perk2, $dict[$perk1])) {
             $dict[$perk1][$perk2] = [];
         }
     }
 
     private function InitialiseDictionary3Perks(&$dict, $perk1, $perk2, $perk3)
     {
-        if (!array_key_exists($perk1, $dict)) {
+        if (! array_key_exists($perk1, $dict)) {
             $dict[$perk1] = [];
         }
-        if (!array_key_exists($perk2, $dict[$perk1])) {
+        if (! array_key_exists($perk2, $dict[$perk1])) {
             $dict[$perk1][$perk2] = [];
         }
-        if (!array_key_exists($perk3, $dict[$perk1][$perk2])) {
+        if (! array_key_exists($perk3, $dict[$perk1][$perk2])) {
             $dict[$perk1][$perk2][$perk3] = [];
         }
     }
@@ -184,7 +173,7 @@ class IndexedArmourDataController extends Controller
                 continue;
             }
             if (array_key_exists(0, $value)) {
-                $value[0] = Lst::sort(fn(array $a, array $b) => $b["perks"][$key] <=> $a["perks"][$key], $value[0]);
+                $value[0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0]);
             }
         }
     }
@@ -197,7 +186,7 @@ class IndexedArmourDataController extends Controller
             }
             if (array_key_exists(0, $value)) {
                 if (array_key_exists(0, $value[0])) {
-                    $value[0][0] = Lst::sort(fn(array $a, array $b) => $b["perks"][$key] <=> $a["perks"][$key], $value[0][0]);
+                    $value[0][0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0][0]);
                 }
             }
         }
