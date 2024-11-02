@@ -49,7 +49,7 @@ class IndexedArmourDataController extends Controller
         ];
     }
 
-    private function addArmour(&$heads, &$torsos, &$arms, &$legs, $armour)
+    private function addArmour(array &$heads, array &$torsos, array &$arms, array &$legs, $armour)
     {
         $tmpPerks = array_map(
             fn ($perk) => [
@@ -143,7 +143,7 @@ class IndexedArmourDataController extends Controller
         }
     }
 
-    private function InitialiseDictionary2Perks(&$dict, $perk1, $perk2)
+    private function InitialiseDictionary2Perks(array &$dict, int $perk1, int $perk2)
     {
         if (! array_key_exists($perk1, $dict)) {
             $dict[$perk1] = [];
@@ -153,7 +153,7 @@ class IndexedArmourDataController extends Controller
         }
     }
 
-    private function InitialiseDictionary3Perks(&$dict, $perk1, $perk2, $perk3)
+    private function InitialiseDictionary3Perks(array &$dict, int $perk1, int $perk2, int $perk3)
     {
         if (! array_key_exists($perk1, $dict)) {
             $dict[$perk1] = [];
@@ -166,19 +166,19 @@ class IndexedArmourDataController extends Controller
         }
     }
 
-    private function sort2PerksArmour(&$dict)
+    private function sort2PerksArmour(array &$dict)
     {
         foreach ($dict as $key => $value) {
             if ($key == 0) {
                 continue;
             }
             if (array_key_exists(0, $value)) {
-                $value[0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0]);
+                $dict[$key][0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0]);
             }
         }
     }
 
-    private function sort3PerksArmour(&$dict)
+    private function sort3PerksArmour(array &$dict)
     {
         foreach ($dict as $key => $value) {
             if ($key == 0) {
@@ -186,7 +186,7 @@ class IndexedArmourDataController extends Controller
             }
             if (array_key_exists(0, $value)) {
                 if (array_key_exists(0, $value[0])) {
-                    $value[0][0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0][0]);
+                    $dict[$key][0][0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0][0]);
                 }
             }
         }
