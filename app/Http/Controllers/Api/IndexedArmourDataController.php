@@ -51,18 +51,9 @@ class IndexedArmourDataController extends Controller
 
     private function addArmour(array &$heads, array &$torsos, array &$arms, array &$legs, $armour)
     {
-        $tmpPerks = array_map(
-            fn ($perk) => [
-                $perk['perk'] => $perk['amount'],
-            ],
-            $armour['perks'],
-        );
-
         $perks = [];
-        foreach ($tmpPerks as $item) {
-            foreach ($item as $key => $value) {
-                $perks[$key] = $value;
-            }
+        foreach ($armour['perks'] as $perk) {
+            $perks[$perk['perk']] = $perk['amount'];
         }
 
         $basicArmour = [
