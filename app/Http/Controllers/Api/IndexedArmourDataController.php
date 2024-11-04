@@ -55,72 +55,72 @@ class IndexedArmourDataController extends Controller
             'perks' => $perks,
         ];
 
-        $armour_perks = array_keys((array) $perks);
-        sort($armour_perks);
+        $armourPerks = array_keys((array) $perks);
+        sort($armourPerks);
 
         switch ($armour['type']) {
             case ArmourType::HEAD:
-                $this->initialiseMap3Perks($heads, $armour_perks[0], $armour_perks[1], $armour_perks[2]);
-                $heads[$armour_perks[0]][$armour_perks[1]][$armour_perks[2]][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armour_perks[0], $armour_perks[1], 0);
-                $heads[$armour_perks[0]][$armour_perks[1]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armour_perks[0], $armour_perks[2], 0);
-                $heads[$armour_perks[0]][$armour_perks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armour_perks[0], 0, 0);
-                $heads[$armour_perks[0]][0][0][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[0], $armourPerks[1], $armourPerks[2]);
+                $heads[$armourPerks[0]][$armourPerks[1]][$armourPerks[2]][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[0], $armourPerks[1], 0);
+                $heads[$armourPerks[0]][$armourPerks[1]][0][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[0], $armourPerks[2], 0);
+                $heads[$armourPerks[0]][$armourPerks[2]][0][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[0], 0, 0);
+                $heads[$armourPerks[0]][0][0][] = $basicArmour;
 
-                $this->initialiseMap3Perks($heads, $armour_perks[1], $armour_perks[2], 0);
-                $heads[$armour_perks[1]][$armour_perks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armour_perks[1], 0, 0);
-                $heads[$armour_perks[1]][0][0][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[1], $armourPerks[2], 0);
+                $heads[$armourPerks[1]][$armourPerks[2]][0][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[1], 0, 0);
+                $heads[$armourPerks[1]][0][0][] = $basicArmour;
 
-                $this->initialiseMap3Perks($heads, $armour_perks[2], 0, 0);
-                $heads[$armour_perks[2]][0][0][] = $basicArmour;
+                $this->initialiseMap3Perks($heads, $armourPerks[2], 0, 0);
+                $heads[$armourPerks[2]][0][0][] = $basicArmour;
 
                 $this->initialiseMap3Perks($heads, 0, 0, 0);
                 $heads[0][0][0][] = $basicArmour;
                 break;
             case ArmourType::TORSO:
-                $this->initialiseMap2Perks($torsos, $armour_perks[0], $armour_perks[1]);
-                $torsos[$armour_perks[0]][$armour_perks[1]][] = $basicArmour;
-                $this->initialiseMap2Perks($torsos, $armour_perks[0], 0);
-                $torsos[$armour_perks[0]][0][] = $basicArmour;
+                $this->initialiseMap2Perks($torsos, $armourPerks[0], $armourPerks[1]);
+                $torsos[$armourPerks[0]][$armourPerks[1]][] = $basicArmour;
+                $this->initialiseMap2Perks($torsos, $armourPerks[0], 0);
+                $torsos[$armourPerks[0]][0][] = $basicArmour;
 
-                $this->initialiseMap2Perks($torsos, $armour_perks[1], 0);
-                $torsos[$armour_perks[1]][0][] = $basicArmour;
+                $this->initialiseMap2Perks($torsos, $armourPerks[1], 0);
+                $torsos[$armourPerks[1]][0][] = $basicArmour;
 
                 $this->initialiseMap2Perks($torsos, 0, 0);
                 $torsos[0][0][] = $basicArmour;
                 break;
             case ArmourType::ARMS:
-                $this->initialiseMap3Perks($arms, $armour_perks[0], $armour_perks[1], $armour_perks[2]);
-                $arms[$armour_perks[0]][$armour_perks[1]][$armour_perks[2]][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armour_perks[0], $armour_perks[1], 0);
-                $arms[$armour_perks[0]][$armour_perks[1]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armour_perks[0], $armour_perks[2], 0);
-                $arms[$armour_perks[0]][$armour_perks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armour_perks[0], 0, 0);
-                $arms[$armour_perks[0]][0][0][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[0], $armourPerks[1], $armourPerks[2]);
+                $arms[$armourPerks[0]][$armourPerks[1]][$armourPerks[2]][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[0], $armourPerks[1], 0);
+                $arms[$armourPerks[0]][$armourPerks[1]][0][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[0], $armourPerks[2], 0);
+                $arms[$armourPerks[0]][$armourPerks[2]][0][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[0], 0, 0);
+                $arms[$armourPerks[0]][0][0][] = $basicArmour;
 
-                $this->initialiseMap3Perks($arms, $armour_perks[1], $armour_perks[2], 0);
-                $arms[$armour_perks[1]][$armour_perks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armour_perks[1], 0, 0);
-                $arms[$armour_perks[1]][0][0][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[1], $armourPerks[2], 0);
+                $arms[$armourPerks[1]][$armourPerks[2]][0][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[1], 0, 0);
+                $arms[$armourPerks[1]][0][0][] = $basicArmour;
 
-                $this->initialiseMap3Perks($arms, $armour_perks[2], 0, 0);
-                $arms[$armour_perks[2]][0][0][] = $basicArmour;
+                $this->initialiseMap3Perks($arms, $armourPerks[2], 0, 0);
+                $arms[$armourPerks[2]][0][0][] = $basicArmour;
 
                 $this->initialiseMap3Perks($arms, 0, 0, 0);
                 $arms[0][0][0][] = $basicArmour;
                 break;
             case ArmourType::LEGS:
-                $this->initialiseMap2Perks($legs, $armour_perks[0], $armour_perks[1]);
-                $legs[$armour_perks[0]][$armour_perks[1]][] = $basicArmour;
-                $this->initialiseMap2Perks($legs, $armour_perks[0], 0);
-                $legs[$armour_perks[0]][0][] = $basicArmour;
+                $this->initialiseMap2Perks($legs, $armourPerks[0], $armourPerks[1]);
+                $legs[$armourPerks[0]][$armourPerks[1]][] = $basicArmour;
+                $this->initialiseMap2Perks($legs, $armourPerks[0], 0);
+                $legs[$armourPerks[0]][0][] = $basicArmour;
 
-                $this->initialiseMap2Perks($legs, $armour_perks[1], 0);
-                $legs[$armour_perks[1]][0][] = $basicArmour;
+                $this->initialiseMap2Perks($legs, $armourPerks[1], 0);
+                $legs[$armourPerks[1]][0][] = $basicArmour;
 
                 $this->initialiseMap2Perks($legs, 0, 0);
                 $legs[0][0][] = $basicArmour;
