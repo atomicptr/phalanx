@@ -5,19 +5,25 @@ namespace App\Http\Controllers\Api;
 use App\Enums\ArmourType;
 use App\Http\Controllers\Controller;
 use App\Models\Armour;
+use App\Models\Patch;
+use App\Utils\VersionUtil;
 use Atomicptr\Functional\Lst;
 
-class IndexedArmourDataController extends Controller
+class FinderDataController extends Controller
 {
     public function index()
     {
-        $armours = Lst::map(
+        $patch = Patch::where(['live' => true])->first();
+        assert($patch instanceof Patch);
+
+        $patchFilterFunc = fn (Armour $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
+
+        $armours = Armour::all()->filter($patchFilterFunc)->map(
             fn (Armour $armour) => [
                 'id' => $armour->id,
                 'perks' => $armour->stats[count($armour->stats) - 1]['perks'],
                 'type' => $armour->type,
-            ],
-            Armour::all()->all(),
+            ]
         );
 
         $heads = [];
