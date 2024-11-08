@@ -26,160 +26,117 @@ class FinderDataController extends Controller
             ]
         );
 
-        $heads = [];
-        $torsos = [];
-        $arms = [];
-        $legs = [];
+        $categories = Lst::groupBy(fn (array $armour) => $armour['type']->value, $armours->all());
 
-        foreach ($armours as $armour) {
-            $this->addArmour($heads, $torsos, $arms, $legs, $armour);
+        $result = [];
+
+        foreach ($categories as $categoryName => $items) {
+            $result[$categoryName] = new \stdClass;
+
+            foreach ($items as $item) {
+                $result[$categoryName] = $this->addArmourToPerksMap($result[$categoryName], $item);
+            }
+
+            $result[$categoryName] = $this->sortPerksArmour($result[$categoryName]);
         }
 
-        // Sort armour data where 1 perk is relevant
-        $this->sort2PerksArmour($torsos);
-        $this->sort2PerksArmour($legs);
-        $this->sort3PerksArmour($heads);
-        $this->sort3PerksArmour($arms);
-
-        return [
-            'heads' => $heads,
-            'torsos' => $torsos,
-            'arms' => $arms,
-            'legs' => $legs,
-        ];
+        return $result;
     }
 
-    private function addArmour(array &$heads, array &$torsos, array &$arms, array &$legs, $armour)
+    private function addArmourToPerksMap(object $map, array $armour): object
     {
-        $perks = [];
+        $perks = new \stdClass;
+
         foreach ($armour['perks'] as $perk) {
-            $perks[$perk['perk']] = $perk['amount'];
+            $perks->{$perk['perk']} = intval($perk['amount']);
         }
 
-        $basicArmour = [
-            'id' => $armour['id'],
-            'perks' => $perks,
-        ];
+        $basicArmour = new \stdClass;
+        $basicArmour->id = $armour['id'];
+        $basicArmour->perks = $perks;
 
         $armourPerks = array_keys((array) $perks);
         sort($armourPerks);
 
-        switch ($armour['type']) {
-            case ArmourType::HEAD:
-                $this->initialiseMap3Perks($heads, $armourPerks[0], $armourPerks[1], $armourPerks[2]);
-                $heads[$armourPerks[0]][$armourPerks[1]][$armourPerks[2]][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armourPerks[0], $armourPerks[1], 0);
-                $heads[$armourPerks[0]][$armourPerks[1]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armourPerks[0], $armourPerks[2], 0);
-                $heads[$armourPerks[0]][$armourPerks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armourPerks[0], 0, 0);
-                $heads[$armourPerks[0]][0][0][] = $basicArmour;
-
-                $this->initialiseMap3Perks($heads, $armourPerks[1], $armourPerks[2], 0);
-                $heads[$armourPerks[1]][$armourPerks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($heads, $armourPerks[1], 0, 0);
-                $heads[$armourPerks[1]][0][0][] = $basicArmour;
-
-                $this->initialiseMap3Perks($heads, $armourPerks[2], 0, 0);
-                $heads[$armourPerks[2]][0][0][] = $basicArmour;
-
-                $this->initialiseMap3Perks($heads, 0, 0, 0);
-                $heads[0][0][0][] = $basicArmour;
-                break;
-            case ArmourType::TORSO:
-                $this->initialiseMap2Perks($torsos, $armourPerks[0], $armourPerks[1]);
-                $torsos[$armourPerks[0]][$armourPerks[1]][] = $basicArmour;
-                $this->initialiseMap2Perks($torsos, $armourPerks[0], 0);
-                $torsos[$armourPerks[0]][0][] = $basicArmour;
-
-                $this->initialiseMap2Perks($torsos, $armourPerks[1], 0);
-                $torsos[$armourPerks[1]][0][] = $basicArmour;
-
-                $this->initialiseMap2Perks($torsos, 0, 0);
-                $torsos[0][0][] = $basicArmour;
-                break;
-            case ArmourType::ARMS:
-                $this->initialiseMap3Perks($arms, $armourPerks[0], $armourPerks[1], $armourPerks[2]);
-                $arms[$armourPerks[0]][$armourPerks[1]][$armourPerks[2]][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armourPerks[0], $armourPerks[1], 0);
-                $arms[$armourPerks[0]][$armourPerks[1]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armourPerks[0], $armourPerks[2], 0);
-                $arms[$armourPerks[0]][$armourPerks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armourPerks[0], 0, 0);
-                $arms[$armourPerks[0]][0][0][] = $basicArmour;
-
-                $this->initialiseMap3Perks($arms, $armourPerks[1], $armourPerks[2], 0);
-                $arms[$armourPerks[1]][$armourPerks[2]][0][] = $basicArmour;
-                $this->initialiseMap3Perks($arms, $armourPerks[1], 0, 0);
-                $arms[$armourPerks[1]][0][0][] = $basicArmour;
-
-                $this->initialiseMap3Perks($arms, $armourPerks[2], 0, 0);
-                $arms[$armourPerks[2]][0][0][] = $basicArmour;
-
-                $this->initialiseMap3Perks($arms, 0, 0, 0);
-                $arms[0][0][0][] = $basicArmour;
-                break;
-            case ArmourType::LEGS:
-                $this->initialiseMap2Perks($legs, $armourPerks[0], $armourPerks[1]);
-                $legs[$armourPerks[0]][$armourPerks[1]][] = $basicArmour;
-                $this->initialiseMap2Perks($legs, $armourPerks[0], 0);
-                $legs[$armourPerks[0]][0][] = $basicArmour;
-
-                $this->initialiseMap2Perks($legs, $armourPerks[1], 0);
-                $legs[$armourPerks[1]][0][] = $basicArmour;
-
-                $this->initialiseMap2Perks($legs, 0, 0);
-                $legs[0][0][] = $basicArmour;
-                break;
-        }
+        return match ($armour['type']) {
+            ArmourType::HEAD, ArmourType::ARMS => $this->add3PerkArmourPiece($map, $armourPerks, $basicArmour),
+            ArmourType::TORSO, ArmourType::LEGS => $this->add2PerkArmourPiece($map, $armourPerks, $basicArmour),
+        };
     }
 
-    private function initialiseMap2Perks(array &$map, int $perk1, int $perk2)
+    private function add3PerkArmourPiece(object $map, array $armourPerks, object $basicArmour): object
     {
-        if (! array_key_exists($perk1, $map)) {
-            $map[$perk1] = [];
-        }
-        if (! array_key_exists($perk2, $map[$perk1])) {
-            $map[$perk1][$perk2] = [];
-        }
+        $map = $this->initPerksMap($map, [$armourPerks[0], $armourPerks[1], $armourPerks[2]]);
+        $map->{$armourPerks[0]}->{$armourPerks[1]}->{$armourPerks[2]}[] = $basicArmour;
+        $map = $this->initPerksMap($map, [$armourPerks[0], $armourPerks[1], 0]);
+        $map->{$armourPerks[0]}->{$armourPerks[1]}->{0}[] = $basicArmour;
+        $map = $this->initPerksMap($map, [$armourPerks[0], $armourPerks[2], 0]);
+        $map->{$armourPerks[0]}->{$armourPerks[2]}->{0}[] = $basicArmour;
+        $map = $this->initPerksMap($map, [$armourPerks[0], 0, 0]);
+        $map->{$armourPerks[0]}->{0}->{0}[] = $basicArmour;
+
+        $map = $this->initPerksMap($map, [$armourPerks[1], $armourPerks[2], 0]);
+        $map->{$armourPerks[1]}->{$armourPerks[2]}->{0}[] = $basicArmour;
+        $map = $this->initPerksMap($map, [$armourPerks[1], 0, 0]);
+        $map->{$armourPerks[1]}->{0}->{0}[] = $basicArmour;
+
+        $map = $this->initPerksMap($map, [$armourPerks[2], 0, 0]);
+        $map->{$armourPerks[2]}->{0}->{0}[] = $basicArmour;
+
+        $map = $this->initPerksMap($map, [0, 0, 0]);
+        $map->{0}->{0}->{0}[] = $basicArmour;
+
+        return $map;
     }
 
-    private function initialiseMap3Perks(array &$map, int $perk1, int $perk2, int $perk3)
+    private function add2PerkArmourPiece(object $map, array $armourPerks, object $basicArmour): object
     {
-        if (! array_key_exists($perk1, $map)) {
-            $map[$perk1] = [];
-        }
-        if (! array_key_exists($perk2, $map[$perk1])) {
-            $map[$perk1][$perk2] = [];
-        }
-        if (! array_key_exists($perk3, $map[$perk1][$perk2])) {
-            $map[$perk1][$perk2][$perk3] = [];
-        }
+        $map = $this->initPerksMap($map, [$armourPerks[0], $armourPerks[1]]);
+        $map->{$armourPerks[0]}->{$armourPerks[1]}[] = $basicArmour;
+        $map = $this->initPerksMap($map, [$armourPerks[0], 0]);
+        $map->{$armourPerks[0]}->{0}[] = $basicArmour;
+
+        $map = $this->initPerksMap($map, [$armourPerks[1], 0]);
+        $map->{$armourPerks[1]}->{0}[] = $basicArmour;
+
+        $map = $this->initPerksMap($map, [0, 0]);
+        $map->{0}->{0}[] = $basicArmour;
+
+        return $map;
     }
 
-    private function sort2PerksArmour(array &$map)
+    private function initPerksMap(object $map, array $perks): object
     {
+        $m = $map;
+
+        foreach ($perks as $index => $perk) {
+            if (! isset($m->{$perk})) {
+                $m->{$perk} = $index === Lst::length($perks) - 1 ? [] : new \stdClass;
+            }
+
+            $m = $m->{$perk};
+        }
+
+        return $map;
+    }
+
+    private function sortPerksArmour(object $map, ?string $importantId = null): object
+    {
+        $map = clone $map;
+
         foreach ($map as $key => $value) {
-            if ($key === 0) {
-                continue;
-            }
-            if (array_key_exists(0, $value)) {
-                $map[$key][0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0]);
-            }
-        }
-    }
-
-    private function sort3PerksArmour(array &$map)
-    {
-        foreach ($map as $key => $value) {
-            if ($key === 0) {
-                continue;
-            }
-            if (array_key_exists(0, $value)) {
-                if (array_key_exists(0, $value[0])) {
-                    $map[$key][0][0] = Lst::sort(fn (array $a, array $b) => $b['perks'][$key] <=> $a['perks'][$key], $value[0][0]);
+            if (is_array($value)) {
+                if ($importantId === '0') {
+                    continue;
                 }
+                $map->{$key} = Lst::sort(fn (object $a, object $b) => $b->perks->{$importantId} <=> $a->perks->{$importantId}, $value);
+
+                continue;
             }
+
+            $map->{$key} = $this->sortPerksArmour($value, $importantId ?? $key);
         }
+
+        return $map;
     }
 }
