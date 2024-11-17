@@ -14,6 +14,8 @@ use App\Models\Patch;
 use App\Models\Perk;
 use App\Models\Weapon;
 use App\Utils\VersionUtil;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DataController extends Controller
@@ -26,6 +28,9 @@ class DataController extends Controller
         $patchFilterFunc = fn (Armour|Weapon|Perk|LanternCore $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
 
         return [
+            '__meta' => [
+                'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
+            ],
             'patch' => PatchResource::make($patch),
             'armours' => $this->collectionToObject(ArmourResource::collection(Armour::all()->filter($patchFilterFunc))),
             'weapons' => $this->collectionToObject(WeaponResource::collection(Weapon::all()->filter($patchFilterFunc))),
