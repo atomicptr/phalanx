@@ -8,6 +8,7 @@
                     <th width="32">{{ __("Icon") }}</th>
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Type") }}</th>
+                    <th>{{ __("Element") }}</th>
                     <th width="32"></th>
                 </tr>
             </thead>
@@ -28,6 +29,9 @@
                         </td>
                         <td>
                             {{ $weapon->type->displayString() }}
+                        </td>
+                        <td>
+                            {{ $weapon->element->displayString() }}
                         </td>
                         <td>
                             <div class="join">
