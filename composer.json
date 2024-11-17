@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "atomicptr/dauntless-builder-sdk": "^3.10",
         "atomicptr/functional": "^0",
         "atomicptr/laravel-github-storage": "^0.1.1",
         "blade-ui-kit/blade-heroicons": "^2.4",

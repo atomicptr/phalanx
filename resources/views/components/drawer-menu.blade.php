@@ -81,21 +81,21 @@
             </h2>
             <ul>
                 <li>
-                    <a class="disabled">
-                        <x-heroicon-o-question-mark-circle class="w-6 h-6" />
+                    <a href="{{ route("admin.builds.meta") }}" class="{{ \App\Utils\RouteUtil::active("admin.builds.meta") }}" wire:navigation>
+                        <x-heroicon-o-sparkles class="w-6 h-6" />
                         {{ __("Meta Builds") }}
                     </a>
                 </li>
                 <li>
                     <a class="disabled">
-                        <x-heroicon-o-question-mark-circle class="w-6 h-6" />
-                        {{ __("Trial Builds") }}
+                        <x-heroicon-o-arrow-uturn-up class="w-6 h-6" />
+                        {{ __("Progression Builds") }}
                     </a>
                 </li>
                 <li>
                     <a class="disabled">
-                        <x-heroicon-o-question-mark-circle class="w-6 h-6" />
-                        {{ __("Progression Builds") }}
+                        <x-heroicon-o-bolt class="w-6 h-6" />
+                        {{ __("Trial Builds") }}
                     </a>
                 </li>
             </ul>

@@ -2,6 +2,7 @@
 
 use App\Enums\Permissions;
 use App\Livewire\Page\Admin\ApiKey;
+use App\Livewire\Page\Admin\Builds\Meta;
 use App\Livewire\Page\Admin\Dashboard;
 use App\Livewire\Page\Admin\Items\Armours;
 use App\Livewire\Page\Admin\Items\LanternCores;
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/items/armours/new', Armours\Create::class)->name('admin.items.armours.new')->can(Permissions::CAN_EDIT_DATA->value);
     Route::get('/admin/items/armours/{armour}', Armours\Edit::class)->name('admin.items.armours.edit')->can(Permissions::CAN_EDIT_DATA->value);
 
+    // lantern cores data
     Route::get('/admin/items/lantern-cores', LanternCores\Index::class)->name('admin.items.lantern-cores')->can(Permissions::CAN_EDIT_DATA->value);
     Route::get('/admin/items/lantern-cores/new', LanternCores\Create::class)->name('admin.items.lantern-cores.new')->can(Permissions::CAN_EDIT_DATA->value);
     Route::get('/admin/items/lantern-cores/{lanternCore}', LanternCores\Edit::class)->name('admin.items.lantern-cores.edit')->can(Permissions::CAN_EDIT_DATA->value);
@@ -64,4 +66,11 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/misc/perks', Perks\Index::class)->name('admin.misc.perks')->can(Permissions::CAN_EDIT_DATA->value);
     Route::get('/admin/misc/perks/new', Perks\Create::class)->name('admin.misc.perks.new')->can(Permissions::CAN_EDIT_DATA->value);
     Route::get('/admin/misc/perks/{perk}', Perks\Edit::class)->name('admin.misc.perks.edit')->can(Permissions::CAN_EDIT_DATA->value);
+
+    ////// Builds
+
+    // meta builds
+    Route::get('/admin/builds/meta', Meta\Index::class)->name('admin.builds.meta')->can(Permissions::CAN_EDIT_BUILDS->value);
+    Route::get('/admin/builds/meta/new', Meta\Create::class)->name('admin.builds.meta.new')->can(Permissions::CAN_EDIT_BUILDS->value);
+    Route::get('/admin/builds/meta/{build}', Meta\Edit::class)->name('admin.builds.meta.edit')->can(Permissions::CAN_EDIT_BUILDS->value);
 });
