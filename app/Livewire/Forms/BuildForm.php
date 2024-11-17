@@ -4,8 +4,8 @@ namespace App\Livewire\Forms;
 
 use App\Enums\BuildCategory;
 use App\Models\Build;
+use App\Rules\BuildIdValid;
 use Atomicptr\Functional\Lst;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class BuildForm extends Form
@@ -14,7 +14,6 @@ class BuildForm extends Form
 
     public ?string $name;
 
-    #[Validate('required')]
     public string $buildId;
 
     public ?string $description;
@@ -36,9 +35,18 @@ class BuildForm extends Form
         $this->patch = $build->patch;
     }
 
+    public function rules()
+    {
+        return [
+            'buildId' => [
+                'required',
+                new BuildIdValid,
+            ],
+        ];
+    }
+
     private function grabData(): array
     {
-        $this->validate();
         $data = $this->all();
 
         $data['buildId'] = Lst::last(explode('/', $data['buildId']));
@@ -51,11 +59,13 @@ class BuildForm extends Form
 
     public function store(): void
     {
+        $this->validate();
         Build::create($this->grabData());
     }
 
     public function update(): void
     {
+        $this->validate();
         $this->build->update($this->grabData());
     }
 }
