@@ -16,10 +16,11 @@ class BuildsController extends Controller
         $patch = Patch::where(['live' => true])->first();
         assert($patch instanceof Patch);
 
-        $patchFilterFunc = fn (Build $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
         $buildFilterFunc = fn (BuildCategory $buildCategory) => fn (Build $b) => $b->buildCategory === $buildCategory;
 
-        $builds = Build::all()->filter($patchFilterFunc);
+        $builds = Build::all()
+            ->filter(fn (Build $m) => \DauntlessBuilder\Build::fromId($m->buildId)->isOk())
+            ->filter(fn (Build $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0);
 
         return [
             'meta' => BuildResource::collection($builds->filter($buildFilterFunc(BuildCategory::META_BUILDS))),
