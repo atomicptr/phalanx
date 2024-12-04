@@ -5,7 +5,7 @@
         <span class="label-text">{{ __($label) }}</span>
     </div>
 
-    <textarea class="textarea textarea-bordered h-24 @error($fieldName) textarea-error @enderror" wire:model="{{ $fieldName }}"></textarea>
+    <textarea class="textarea textarea-bordered h-24 @error($fieldName) textarea-error @enderror" spellcheck="true" wire:model="{{ $fieldName }}"></textarea>
 
     @error($fieldName)
         <div class="label">
