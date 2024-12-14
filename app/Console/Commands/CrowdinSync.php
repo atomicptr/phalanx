@@ -11,7 +11,7 @@ use ZipArchive;
 
 use function Illuminate\Filesystem\join_paths;
 
-class CrowdinUpdateSources extends Command
+class CrowdinSync extends Command
 {
     protected $signature = 'app:crowdin-sync';
 
