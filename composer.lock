@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ba23976b2e7df7685292497b7f4ea43",
+    "content-hash": "a024c48d0a9b49fd7c1db68077145907",
     "packages": [
         {
             "name": "atomicptr/dauntless-builder-sdk",
@@ -542,6 +542,67 @@
                 }
             ],
             "time": "2023-12-20T15:40:13+00:00"
+        },
+        {
+            "name": "crowdin/crowdin-api-client",
+            "version": "1.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crowdin/crowdin-api-client-php.git",
+                "reference": "d2e4f8076e53a421e769c5dfe39fc5affe0e5234"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crowdin/crowdin-api-client-php/zipball/d2e4f8076e53a421e769c5dfe39fc5affe0e5234",
+                "reference": "d2e4f8076e53a421e769c5dfe39fc5affe0e5234",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.2 || ^7",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.3.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CrowdinApiClient\\FrameworkSupport\\Laravel\\CrowdinServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CrowdinApiClient\\": "src/CrowdinApiClient"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Crowdin",
+                    "homepage": "https://crowdin.com"
+                }
+            ],
+            "description": "PHP client library for Crowdin API v2",
+            "homepage": "https://github.com/crowdin/crowdin-api-client-php",
+            "keywords": [
+                "API-Client",
+                "api",
+                "client",
+                "crowdin",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/crowdin/crowdin-api-client-php/issues",
+                "source": "https://github.com/crowdin/crowdin-api-client-php/tree/1.15.0"
+            },
+            "time": "2024-11-15T07:29:44+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -10204,12 +10265,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

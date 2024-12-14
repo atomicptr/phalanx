@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'crowdin' => [
+        'token' => env('CROWDIN_TOKEN'),
+        'project' => env('CROWDIN_PROJECT'),
+        'file' => env('CROWDIN_FILE'),
+    ],
 ];
