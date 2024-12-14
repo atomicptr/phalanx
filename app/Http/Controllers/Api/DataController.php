@@ -14,9 +14,11 @@ use App\Models\Patch;
 use App\Models\Perk;
 use App\Models\Weapon;
 use App\Utils\VersionUtil;
+use Carbon\Carbon;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class DataController extends Controller
 {
@@ -25,18 +27,24 @@ class DataController extends Controller
         $patch = Patch::where(['live' => true])->first();
         assert($patch instanceof Patch);
 
-        $patchFilterFunc = fn (Armour|Weapon|Perk|LanternCore $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
+        $commit = env('SOURCE_COMMIT', 'dev');
+        $cacheKey = "api-data-{$patch->name}-$commit";
 
-        return [
-            '__meta' => [
-                'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
-            ],
-            'patch' => PatchResource::make($patch),
-            'armours' => $this->collectionToObject(ArmourResource::collection(Armour::all()->filter($patchFilterFunc))),
-            'weapons' => $this->collectionToObject(WeaponResource::collection(Weapon::all()->filter($patchFilterFunc))),
-            'lantern_cores' => $this->collectionToObject(LanternCoreResource::collection(LanternCore::all()->filter($patchFilterFunc))),
-            'perks' => $this->collectionToObject(PerkResource::collection(Perk::all()->filter($patchFilterFunc))),
-        ];
+        return Cache::remember($cacheKey, Carbon::SECONDS_PER_MINUTE * 30, function () use ($patch, $commit) {
+            $patchFilterFunc = fn (Armour|Weapon|Perk|LanternCore $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
+
+            return [
+                '__meta' => [
+                    'commit' => $commit,
+                    'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
+                ],
+                'patch' => PatchResource::make($patch),
+                'armours' => $this->collectionToObject(ArmourResource::collection(Armour::all()->filter($patchFilterFunc))),
+                'weapons' => $this->collectionToObject(WeaponResource::collection(Weapon::all()->filter($patchFilterFunc))),
+                'lantern_cores' => $this->collectionToObject(LanternCoreResource::collection(LanternCore::all()->filter($patchFilterFunc))),
+                'perks' => $this->collectionToObject(PerkResource::collection(Perk::all()->filter($patchFilterFunc))),
+            ];
+        });
     }
 
     private function collectionToObject(ResourceCollection $collection): array

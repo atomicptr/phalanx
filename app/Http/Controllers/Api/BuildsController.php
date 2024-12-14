@@ -8,6 +8,10 @@ use App\Http\Resources\BuildResource;
 use App\Models\Build;
 use App\Models\Patch;
 use App\Utils\VersionUtil;
+use Carbon\Carbon;
+use DateTime;
+use DateTimeZone;
+use Illuminate\Support\Facades\Cache;
 
 class BuildsController extends Controller
 {
@@ -16,14 +20,23 @@ class BuildsController extends Controller
         $patch = Patch::where(['live' => true])->first();
         assert($patch instanceof Patch);
 
-        $buildFilterFunc = fn (BuildCategory $buildCategory) => fn (Build $b) => $b->buildCategory === $buildCategory;
+        $commit = env('SOURCE_COMMIT', 'dev');
+        $cacheKey = "api-builds-{$patch->name}-$commit";
 
-        $builds = Build::all()
-            ->filter(fn (Build $m) => \DauntlessBuilder\Build::fromId($m->buildId)->isOk())
-            ->filter(fn (Build $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0);
+        return Cache::remember($cacheKey, Carbon::SECONDS_PER_MINUTE * 30, function () use ($patch, $commit) {
+            $buildFilterFunc = fn (BuildCategory $buildCategory) => fn (Build $b) => $b->buildCategory === $buildCategory;
 
-        return [
-            'meta' => BuildResource::collection($builds->filter($buildFilterFunc(BuildCategory::META_BUILDS))),
-        ];
+            $builds = Build::all()
+                ->filter(fn (Build $m) => \DauntlessBuilder\Build::fromId($m->buildId)->isOk())
+                ->filter(fn (Build $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0);
+
+            return [
+                '__meta' => [
+                    'commit' => $commit,
+                    'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
+                ],
+                'meta' => BuildResource::collection($builds->filter($buildFilterFunc(BuildCategory::META_BUILDS))),
+            ];
+        });
     }
 }

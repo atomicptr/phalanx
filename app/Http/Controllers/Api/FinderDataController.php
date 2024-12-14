@@ -8,6 +8,10 @@ use App\Models\Armour;
 use App\Models\Patch;
 use App\Utils\VersionUtil;
 use Atomicptr\Functional\Lst;
+use Carbon\Carbon;
+use DateTime;
+use DateTimeZone;
+use Illuminate\Support\Facades\Cache;
 
 class FinderDataController extends Controller
 {
@@ -16,31 +20,41 @@ class FinderDataController extends Controller
         $patch = Patch::where(['live' => true])->first();
         assert($patch instanceof Patch);
 
-        $patchFilterFunc = fn (Armour $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
+        $commit = env('SOURCE_COMMIT', 'dev');
+        $cacheKey = "api-finder-data-{$patch->name}-$commit";
 
-        $armours = Armour::all()->filter($patchFilterFunc)->map(
-            fn (Armour $armour) => [
-                'id' => $armour->id,
-                'perks' => $armour->stats[count($armour->stats) - 1]['perks'],
-                'type' => $armour->type,
-            ]
-        );
+        return Cache::remember($cacheKey, Carbon::SECONDS_PER_MINUTE * 30, function () use ($patch, $commit) {
+            $patchFilterFunc = fn (Armour $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
 
-        $categories = Lst::groupBy(fn (array $armour) => $armour['type']->value, $armours->all());
+            $armours = Armour::all()->filter($patchFilterFunc)->map(
+                fn (Armour $armour) => [
+                    'id' => $armour->id,
+                    'perks' => $armour->stats[count($armour->stats) - 1]['perks'],
+                    'type' => $armour->type,
+                ]
+            );
 
-        $result = [];
+            $categories = Lst::groupBy(fn (array $armour) => $armour['type']->value, $armours->all());
 
-        foreach ($categories as $categoryName => $items) {
-            $result[$categoryName] = new \stdClass;
+            $result = [
+                '__meta' => [
+                    'commit' => $commit,
+                    'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
+                ],
+            ];
 
-            foreach ($items as $item) {
-                $result[$categoryName] = $this->addArmourToPerksMap($result[$categoryName], $item);
+            foreach ($categories as $categoryName => $items) {
+                $result[$categoryName] = new \stdClass;
+
+                foreach ($items as $item) {
+                    $result[$categoryName] = $this->addArmourToPerksMap($result[$categoryName], $item);
+                }
+
+                $result[$categoryName] = $this->sortPerksArmour($result[$categoryName]);
             }
 
-            $result[$categoryName] = $this->sortPerksArmour($result[$categoryName]);
-        }
-
-        return $result;
+            return $result;
+        });
     }
 
     private function addArmourToPerksMap(object $map, array $armour): object
