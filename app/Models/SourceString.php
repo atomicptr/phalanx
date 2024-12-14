@@ -12,5 +12,6 @@ class SourceString extends Model
         'model',
         'modelId',
         'modelField',
+        'manual',
     ];
 }

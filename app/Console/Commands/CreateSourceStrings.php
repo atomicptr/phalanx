@@ -102,6 +102,7 @@ class CreateSourceStrings extends Command
                 'modelId' => $id,
                 'modelField' => $field,
                 'content' => $content,
+                'manual' => false,
             ],
         );
     }
