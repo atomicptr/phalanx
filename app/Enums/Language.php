@@ -17,6 +17,8 @@ enum Language: string
     case JAPANESE = 'ja';
     case PORTUGUESE = 'pt';
     case RUSSIAN = 'ru';
+    case CHINESE_SIMPLIFIED = 'zh';
+    case CHINESE_TRADITIONAL = 'zx'; // this is a custom key we use in crowdin because in reality the ISO codes don't differentiate
 
     // unofficial languages
     case TURKISH = 'tr';
@@ -27,6 +29,8 @@ enum Language: string
         return match ($this) {
             Language::SPANISH => 'es-ES',
             Language::PORTUGUESE => 'pt-BR',
+            Language::CHINESE_SIMPLIFIED => 'zh-CN',
+            Language::CHINESE_TRADITIONAL => 'zh-TW',
             default => $this->value,
         };
     }
