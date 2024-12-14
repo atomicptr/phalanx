@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Build;
+use App\Service\TranslationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -11,9 +13,9 @@ class BuildResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => TranslationService::i18n(Build::class, $this->id, 'name', $this->name),
             'buildId' => $this->buildId,
-            'description' => $this->description,
+            'description' => TranslationService::i18n(Build::class, $this->id, 'description', $this->description),
             'youtube' => $this->youtube,
         ];
     }
