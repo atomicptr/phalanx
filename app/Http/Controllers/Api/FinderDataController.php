@@ -11,6 +11,7 @@ use Atomicptr\Functional\Lst;
 use Carbon\Carbon;
 use DateTime;
 use DateTimeZone;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
 class FinderDataController extends Controller
@@ -22,8 +23,9 @@ class FinderDataController extends Controller
 
         $commit = env('SOURCE_COMMIT', 'dev');
         $cacheKey = "api-finder-data-{$patch->name}-$commit";
+        $cacheTime = App::hasDebugModeEnabled() ? 1 : Carbon::SECONDS_PER_MINUTE * 30;
 
-        return Cache::remember($cacheKey, Carbon::SECONDS_PER_MINUTE * 30, function () use ($patch, $commit) {
+        return Cache::remember($cacheKey, $cacheTime, function () use ($patch, $commit) {
             $patchFilterFunc = fn (Armour $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0;
 
             $armours = Armour::all()->filter($patchFilterFunc)->map(
