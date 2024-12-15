@@ -11,7 +11,11 @@
 
     <div class="mx-2 flex-1 hidden lg:block"></div>
 
-    <div class="dropdown dropdown-end hidden md:block">
+    @can("can-publish")
+        <livewire:deploy-button />
+    @endcan
+
+    <div class="dropdown dropdown-end hidden md:block">    
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
                 <img src="{{ Auth::user()->gravatarUrl() }}" />
