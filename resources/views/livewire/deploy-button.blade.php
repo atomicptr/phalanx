@@ -1,6 +1,6 @@
 <div class="hidden sm:flex" wire:poll.5s>
     @if ($this->can())
-        <button class="btn mr-4" disabled wire:loading>
+        <button class="btn mr-4" disabled wire:loading.delay>
             <span class="loading loading-spinner loading-md"></span>
         </button>
         <button class="btn mr-4" wire:click="deploy()" wire:loading.remove>
