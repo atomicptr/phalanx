@@ -14,7 +14,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->perks = Perk::all()->all();
+        $this->perks = Perk::orderBy('name', 'ASC')->get()->all();
     }
 
     public function render()

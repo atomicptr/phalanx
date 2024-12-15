@@ -14,7 +14,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->lanternCores = LanternCore::all()->all();
+        $this->lanternCores = LanternCore::orderBy('name', 'ASC')->get()->all();
     }
 
     public function render()

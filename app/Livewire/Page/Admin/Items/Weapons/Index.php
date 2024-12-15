@@ -14,7 +14,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->weapons = Weapon::all()->all(); // TODO check confidentiality
+        $this->weapons = Weapon::orderBy('name', 'ASC')->get()->all();
     }
 
     public function render()

@@ -15,7 +15,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->builds = Build::where('buildCategory', '=', BuildCategory::META_BUILDS->value)->get()->all();
+        $this->builds = Build::where('buildCategory', '=', BuildCategory::META_BUILDS->value)->orderBy('name', 'ASC')->get()->all();
     }
 
     public function render()

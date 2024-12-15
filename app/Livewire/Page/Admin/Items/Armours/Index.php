@@ -14,7 +14,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->armours = Armour::all()->all(); // TODO check confidentiality
+        $this->armours = Armour::all()->all(); // TODO: group by behemoth // TODO: always show head / torso / arms / legs
     }
 
     public function render()
