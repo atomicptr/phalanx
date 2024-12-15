@@ -21,7 +21,6 @@ class Armour extends Model implements Auditable
         'description',
         'icon',
         'element',
-        'stats',
         'patch',
         'perkA',
         'perkB',
@@ -34,7 +33,6 @@ class Armour extends Model implements Auditable
         return [
             'type' => ArmourType::class,
             'element' => Element::class,
-            'stats' => 'array',
         ];
     }
 

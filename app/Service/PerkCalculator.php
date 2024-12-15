@@ -75,7 +75,7 @@ final class PerkCalculator
             $map = $map->set($d, $data['d']);
         }
 
-        return $map->toArray();
+        return Map::fromList(Lst::sort(fn (array $a, array $b) => intval($a[0]) <=> intval($b[0]), $map->toList()))->toArray();
     }
 
     public static function calculate(ArmourType $armourType, int $a, int $b, int $c, int $d): array

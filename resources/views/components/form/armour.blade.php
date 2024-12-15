@@ -62,8 +62,6 @@
         </div>
     @endcan
 
-    <x-form.armour-stats label="Stats" :values="$form->stats" />
-
     <x-input.patch-select fieldName="form.patch" :values="$patches" />
 
     <x-input.submit />

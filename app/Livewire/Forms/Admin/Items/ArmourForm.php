@@ -36,8 +36,6 @@ class ArmourForm extends Form
 
     public ?int $perkD = null;
 
-    public array $stats = [];
-
     public ?int $patch = null;
 
     public string $quickSetData = '';
@@ -54,7 +52,6 @@ class ArmourForm extends Form
         $this->perkB = $armour->perkB;
         $this->perkC = $armour->perkC;
         $this->perkD = $armour->perkD;
-        $this->stats = $armour->stats ?? [];
         $this->patch = $armour->patch;
     }
 
@@ -78,8 +75,6 @@ class ArmourForm extends Form
         return $this->all();
     }
 
-    // TODO: validate stats
-
     public function store()
     {
         $this->validate();
@@ -90,33 +85,6 @@ class ArmourForm extends Form
     {
         $this->validate();
         $this->armour->update($this->grabFormData());
-    }
-
-    public function addStatSet(): void
-    {
-        $this->stats = Lst::sort(fn (array $a, array $b) => $a['min_level'] <=> $b['min_level'], $this->stats);
-        $highestLevel = Lst::length($this->stats) > 0 ? Lst::last($this->stats)['min_level'] : 0;
-        $this->stats = Lst::cons($this->stats, ['id' => (string) Str::uuid(), 'min_level' => (Lst::isEmpty($this->stats) ? 1 : ($highestLevel === 1 ? 0 : $highestLevel) + 5), 'perks' => []]);
-    }
-
-    public function removeStatSet(int $index): void
-    {
-        $this->stats = Lst::filter(fn (array $val, int $idx) => $idx !== $index, $this->stats);
-    }
-
-    public function addPerk(int $index): void
-    {
-        $this->stats[$index]['perks'] = Lst::cons($this->stats[$index]['perks'], ['id' => (string) Str::uuid(), 'perk' => null, 'amount' => 0]);
-    }
-
-    public function removePerk(int $index, int $perkIndex): void
-    {
-        $this->stats[$index]['perks'] = Lst::filter(fn (array $val, int $idx) => $idx !== $perkIndex, $this->stats[$index]['perks']);
-    }
-
-    public function selectedPerks(int $index): array
-    {
-        return Lst::map(fn (array $perk) => intval($perk['perk']), Lst::filter(fn (array $perk) => $perk !== null, $this->stats[$index]['perks']));
     }
 
     public function setFromQuickSet()
