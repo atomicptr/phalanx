@@ -8,6 +8,10 @@
                     <th width="32">{{ __("Icon") }}</th>
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Type") }}</th>
+                    <th>{{ __("Perk A") }}</th>
+                    <th>{{ __("Perk B") }}</th>
+                    <th>{{ __("Perk C") }}</th>
+                    <th>{{ __("Perk D") }}</th>
                     <th width="32"></th>
                 </tr>
             </thead>
@@ -28,6 +32,18 @@
                         </td>
                         <td>
                             {{ $armour->type->displayString() }}
+                        </td>
+                        <td>
+                            {{ $armour->a?->name ?? "x" }}
+                        </td>
+                        <td>
+                            {{ $armour->b?->name ?? "x" }}
+                        </td>
+                        <td>
+                            {{ $armour->c?->name  ?? "x" }}
+                        </td>
+                        <td>
+                            {{ $armour->d?->name  ?? "x" }}
                         </td>
                         <td>
                             <div class="join">
