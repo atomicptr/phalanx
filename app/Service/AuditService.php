@@ -2,9 +2,11 @@
 
 namespace App\Service;
 
+use App\Enums\BuildCategory;
 use App\Models\Armour;
 use App\Models\Build;
 use App\Models\LanternCore;
+use App\Models\Patch;
 use App\Models\Perk;
 use App\Models\Weapon;
 use Atomicptr\Functional\Lst;
@@ -40,10 +42,19 @@ final class AuditService
                     LanternCore::class => 'lantern core',
                     Build::class => 'build',
                     Perk::class => 'perk',
+                    Patch::class => 'patch',
                     default => $audit->auditable_type,
                 },
                 'link' => match ($audit->auditable_type) {
                     Weapon::class => route('admin.items.weapons.edit', ['weapon' => $audit->auditable_id]),
+                    Armour::class => route('admin.items.armours.edit', ['armour' => $audit->auditable_id]),
+                    LanternCore::class => route('admin.items.lantern-cores.edit', ['lanternCore' => $audit->auditable_id]),
+                    Build::class => match ($audit->auditable->buildCategory) {
+                        BuildCategory::META_BUILDS => route('admin.builds.meta.edit', ['build' => $audit->auditable_id]),
+                        default => '#',
+                    },
+                    Perk::class => route('admin.misc.perks.edit', ['perk' => $audit->auditable_id]),
+                    Patch::class => route('admin.patch.edit', ['patch' => $audit->auditable->name]),
                     default => '#',
                 },
             ],
