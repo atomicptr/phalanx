@@ -27,7 +27,10 @@ class I18nController extends Controller
 
         return Cache::remember($cacheKey, $cacheTime, function () use ($commit) {
             $sourceStrings = SourceString::where('manual', true)->orderBy('ident', 'ASC')->get()->all();
-            $translations = Translation::all()->all();
+            $translations = Translation::whereIn(
+                'ident',
+                Lst::map(fn (SourceString $sourceString) => $sourceString->ident, $sourceStrings),
+            )->get()->all();
 
             $res = [
                 '__meta' => [
@@ -44,7 +47,7 @@ class I18nController extends Controller
                 foreach ($sourceStrings as $sourceString) {
                     assert($sourceString instanceof SourceString);
 
-                    $translation = Lst::find(fn (Translation $trans) => $trans->ident === $sourceString->ident, $translations);
+                    $translation = Lst::find(fn (Translation $trans) => $trans->language->value === $lang && $trans->ident === $sourceString->ident, $translations);
 
                     $content = $translation->isSome() ? $translation->value()->content : $sourceString->content;
 
