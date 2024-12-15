@@ -40,6 +40,8 @@ class ArmourForm extends Form
 
     public ?int $patch = null;
 
+    public string $quickSetData = '';
+
     public function setArmour(Armour $armour)
     {
         $this->armour = $armour;
@@ -115,5 +117,21 @@ class ArmourForm extends Form
     public function selectedPerks(int $index): array
     {
         return Lst::map(fn (array $perk) => intval($perk['perk']), Lst::filter(fn (array $perk) => $perk !== null, $this->stats[$index]['perks']));
+    }
+
+    public function setFromQuickSet()
+    {
+        $parts = Lst::map(fn (string $part) => intval(trim($part)), explode(',', $this->quickSetData));
+
+        if (count($parts) !== 4) {
+            return;
+        }
+
+        [$a, $b, $c, $d] = $parts;
+
+        $this->perkA = $a;
+        $this->perkB = $b;
+        $this->perkC = $c;
+        $this->perkD = $d;
     }
 }

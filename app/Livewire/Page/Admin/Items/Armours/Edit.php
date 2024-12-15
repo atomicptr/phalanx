@@ -38,4 +38,9 @@ class Edit extends Component
     {
         return view('livewire.page.admin.items.armours.edit');
     }
+
+    public function setFromQuickSet()
+    {
+        $this->form->setFromQuickSet();
+    }
 }

@@ -32,6 +32,36 @@
         </div>
     @endif
 
+    @can("is-admin")
+        <div class="card bg-base-200 max-w-lg my-4">
+            <div class="card-body">
+                <div class="card-title">
+                    {{ __("Quick Set Perks")}}
+                </div>
+
+                @if ($this->form->type && $this->form->perkA && $this->form->perkB && $this->form->perkC && $this->form->perkD)
+                    <label class="form-control w-full max-w-xs">
+                        <div class="label">
+                            <span class="label-text">{{ __("IDs") }}</span>
+                        </div>
+                        <input type="text" class="input input-bordered w-full max-w-xs" disabled value="{{ $this->form->perkA }},{{ $this->form->perkB }},{{ $this->form->perkC }},{{ $this->form->perkD }}" />
+                    </label>
+                @endif
+
+                <div class="join">
+                    <div>
+                        <div>
+                            <input class="input input-bordered join-item" placeholder="{{ __("IDs") }}" wire:model="form.quickSetData" />
+                        </div>
+                    </div>
+                    <button class="btn btn-primary join-item" wire:click="setFromQuickSet()" type="button">
+                        {{ __("Set") }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endcan
+
     <x-form.armour-stats label="Stats" :values="$form->stats" />
 
     <x-input.patch-select fieldName="form.patch" :values="$patches" />

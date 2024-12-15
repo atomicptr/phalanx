@@ -29,4 +29,9 @@ class Index extends Component
         $armour->delete();
         $this->redirectRoute('admin.items.armours'); // better way to handle this?
     }
+
+    public function setFromQuickSet()
+    {
+        $this->form->setFromQuickSet();
+    }
 }
