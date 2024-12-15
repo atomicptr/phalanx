@@ -10,6 +10,7 @@ use App\Livewire\Page\Admin\Items\Weapons;
 use App\Livewire\Page\Admin\Misc\Perks;
 use App\Livewire\Page\Admin\Patch;
 use App\Livewire\Page\Admin\Settings;
+use App\Livewire\Page\Admin\SourceStrings;
 use App\Livewire\Page\Admin\User;
 use App\Livewire\Page\Login;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,10 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/admin/api-key', ApiKey\Index::class)->name('admin.api-key')->can('is-admin');
     Route::get('/admin/api-key/new', ApiKey\Create::class)->name('admin.api-key.new')->can('is-admin');
     Route::get('/admin/api-key/{apiKey}', ApiKey\Edit::class)->name('admin.api-key.edit')->can('is-admin');
+
+    Route::get('/admin/source-string', SourceStrings\Index::class)->name('admin.source-string')->can('is-admin');
+    Route::get('/admin/source-string/new', SourceStrings\Create::class)->name('admin.source-string.new')->can('is-admin');
+    Route::get('/admin/source-string/{sourceString}', SourceStrings\Edit::class)->name('admin.source-string.edit')->can('is-admin');
 
     // patches
     Route::get('/admin/patch', Patch\Index::class)->name('admin.patch')->can(Permissions::CAN_ACCESS_PATCHES->value);

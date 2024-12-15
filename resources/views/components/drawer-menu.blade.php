@@ -27,6 +27,12 @@
                             {{ __("API Keys") }}
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route("admin.source-string") }}" class="{{ \App\Utils\RouteUtil::active("admin.source-string") }}" wire:navigation>
+                            <x-heroicon-o-globe-alt class="w-6 h-6" />
+                            {{ __("Source Strings") }}
+                        </a>
+                    </li>
                 @endcan
                 @can("can-access-patches")
                     <li>
