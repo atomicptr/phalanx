@@ -7,6 +7,7 @@ use App\Enums\Element;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use OwenIt\Auditing\Auditable as IsAuditable;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -23,6 +24,10 @@ class Armour extends Model implements Auditable
         'element',
         'stats',
         'patch',
+        'perkA',
+        'perkB',
+        'perkC',
+        'perkD',
     ];
 
     protected function casts(): array
@@ -37,5 +42,25 @@ class Armour extends Model implements Auditable
     public function patch(): BelongsTo
     {
         return $this->belongsTo(Patch::class, 'patch');
+    }
+
+    public function perkA(): HasOne
+    {
+        return $this->hasOne(Perk::class, 'perkA');
+    }
+
+    public function perkB(): HasOne
+    {
+        return $this->hasOne(Perk::class, 'perkB');
+    }
+
+    public function perkC(): HasOne
+    {
+        return $this->hasOne(Perk::class, 'perkC');
+    }
+
+    public function perkD(): HasOne
+    {
+        return $this->hasOne(Perk::class, 'perkD');
     }
 }

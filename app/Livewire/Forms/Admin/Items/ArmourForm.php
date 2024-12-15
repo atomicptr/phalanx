@@ -27,6 +27,14 @@ class ArmourForm extends Form
 
     public Element $element = Element::BLAZE;
 
+    public ?int $perkA = null;
+
+    public ?int $perkB = null;
+
+    public ?int $perkC = null;
+
+    public ?int $perkD = null;
+
     public array $stats = [];
 
     public ?int $patch = null;
@@ -39,6 +47,10 @@ class ArmourForm extends Form
         $this->type = $armour->type;
         $this->icon = $armour->icon;
         $this->element = $armour->element;
+        $this->perkA = $armour->perkA;
+        $this->perkB = $armour->perkB;
+        $this->perkC = $armour->perkC;
+        $this->perkD = $armour->perkD;
         $this->stats = $armour->stats ?? [];
         $this->patch = $armour->patch;
     }

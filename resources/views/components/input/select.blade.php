@@ -26,7 +26,7 @@
             @endif
         </select>
 
-        @if (enum_exists($values) && is_subclass_of($values, \App\Contracts\HasIcon::class))
+        @if (!is_array($values) && enum_exists($values) && is_subclass_of($values, \App\Contracts\HasIcon::class))
             <img class="w-8 h-8" src="{{ $this->form->type->icon() }}" />
         @endif
     </div>

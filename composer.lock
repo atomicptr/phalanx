@@ -110,16 +110,16 @@
         },
         {
             "name": "atomicptr/functional",
-            "version": "v0.15.0",
+            "version": "v0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/atomicptr/php-functional.git",
-                "reference": "f55fb7a7b0d99e67586944d598b6da978a6b4301"
+                "reference": "3de4b11a13efb61fa26c95738fd067025cb5ca79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/atomicptr/php-functional/zipball/f55fb7a7b0d99e67586944d598b6da978a6b4301",
-                "reference": "f55fb7a7b0d99e67586944d598b6da978a6b4301",
+                "url": "https://api.github.com/repos/atomicptr/php-functional/zipball/3de4b11a13efb61fa26c95738fd067025cb5ca79",
+                "reference": "3de4b11a13efb61fa26c95738fd067025cb5ca79",
                 "shasum": ""
             },
             "require": {
@@ -149,9 +149,9 @@
             "description": "A set of tools to enable a more functional style of programming in PHP, inspired by OCaml",
             "support": {
                 "issues": "https://github.com/atomicptr/php-functional/issues",
-                "source": "https://github.com/atomicptr/php-functional/tree/v0.15.0"
+                "source": "https://github.com/atomicptr/php-functional/tree/v0.16.0"
             },
-            "time": "2024-11-20T13:30:17+00:00"
+            "time": "2024-12-15T19:09:11+00:00"
         },
         {
             "name": "atomicptr/laravel-github-storage",

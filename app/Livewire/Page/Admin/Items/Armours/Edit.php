@@ -5,6 +5,7 @@ namespace App\Livewire\Page\Admin\Items\Armours;
 use App\Models\Armour;
 use App\Traits\WithArmourForm;
 use App\Traits\WithPatches;
+use App\Traits\WithPerksABCD;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -14,6 +15,7 @@ class Edit extends Component
     use WithArmourForm;
     use WithFileUploads;
     use WithPatches;
+    use WithPerksABCD;
 
     #[Url]
     public Armour $armour;
@@ -21,6 +23,7 @@ class Edit extends Component
     public function mount()
     {
         $this->loadPatches();
+        $this->loadPerks();
         $this->form->setArmour($this->armour);
     }
 
