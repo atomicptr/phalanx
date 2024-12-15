@@ -2,8 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Enums\Permissions;
+use App\Service\PermissionService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
 
@@ -31,6 +34,7 @@ class DeployButton extends Component
             static::RATE_LIMITER_KEY,
             static::RATE_LIMITER_ATTEMPTS,
             function () {
+                assert(PermissionService::can(Auth::user(), Permissions::CAN_PUBLISH));
                 Artisan::call('app:deploy-frontend');
             },
             static::RATE_LIMITER_PER_MINUTES * Carbon::SECONDS_PER_MINUTE,
