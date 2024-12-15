@@ -1,4 +1,4 @@
-@props(['label', 'fieldName', 'values'])
+@props(['label', 'fieldName', 'values', 'empty' => false])
 
 <label class="form-control w-full max-w-lg my-2">
     <div class="label">
@@ -7,6 +7,10 @@
 
     <div class="flex flex-row gap-2 items-center">
         <select class="select select-bordered w-full max-w-lg @error($fieldName) select-error @enderror" wire:model.change="{{ $fieldName }}">
+            @if ($empty)
+                <option>{{ $empty }}</option>
+            @endif
+
             @if (is_array($values))
                 @foreach ($values as $key => $value)
                     <option value="{{ $key }}">

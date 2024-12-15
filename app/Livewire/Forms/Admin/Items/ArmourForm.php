@@ -5,6 +5,7 @@ namespace App\Livewire\Forms\Admin\Items;
 use App\Enums\ArmourType;
 use App\Enums\Element;
 use App\Models\Armour;
+use App\Rules\PerkABCDRule;
 use App\Utils\UploadUtil;
 use Atomicptr\Functional\Lst;
 use Illuminate\Support\Str;
@@ -53,6 +54,16 @@ class ArmourForm extends Form
         $this->perkD = $armour->perkD;
         $this->stats = $armour->stats ?? [];
         $this->patch = $armour->patch;
+    }
+
+    public function rules()
+    {
+        return [
+            'perkA' => new PerkABCDRule([$this->perkB, $this->perkC, $this->perkD]),
+            'perkB' => new PerkABCDRule([$this->perkA, $this->perkC, $this->perkD]),
+            'perkC' => new PerkABCDRule([$this->perkA, $this->perkB, $this->perkD]),
+            'perkD' => new PerkABCDRule([$this->perkA, $this->perkB, $this->perkC]),
+        ];
     }
 
     private function grabFormData(): array
