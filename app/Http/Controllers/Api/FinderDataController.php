@@ -6,6 +6,7 @@ use App\Enums\ArmourType;
 use App\Http\Controllers\Controller;
 use App\Models\Armour;
 use App\Models\Patch;
+use App\Service\PerkCalculator;
 use App\Utils\VersionUtil;
 use Atomicptr\Functional\Lst;
 use Carbon\Carbon;
@@ -31,7 +32,7 @@ class FinderDataController extends Controller
             $armours = Armour::all()->filter($patchFilterFunc)->map(
                 fn (Armour $armour) => [
                     'id' => $armour->id,
-                    'perks' => $armour->stats[count($armour->stats) - 1]['perks'],
+                    'perks' => Lst::last(PerkCalculator::calculate($armour->type, $armour->perkA, $armour->perkB, $armour->perkC, $armour->perkD))['perks'],
                     'type' => $armour->type,
                 ]
             );
@@ -63,8 +64,8 @@ class FinderDataController extends Controller
     {
         $perks = new \stdClass;
 
-        foreach ($armour['perks'] as $perk) {
-            $perks->{$perk['perk']} = intval($perk['amount']);
+        foreach ($armour['perks'] as $perkId => $amount) {
+            $perks->{$perkId} = $amount;
         }
 
         $basicArmour = new \stdClass;
