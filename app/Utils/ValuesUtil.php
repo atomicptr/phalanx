@@ -11,7 +11,7 @@ class ValuesUtil
     public static function prepare(array $values): array
     {
         return Lst::map(
-            fn (array $value) => [...$value, 'type' => ValueType::from($value['type'])],
+            fn (array $value) => [...$value, 'type' => $value['type'] instanceof ValueType ? $value['type'] : ValueType::from($value['type'])],
             Lst::map(
                 fn (array $value) => array_merge(
                     [
