@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Patch;
 use App\Models\SourceString;
 use App\Models\Translation;
+use App\Service\CrowdinStatsService;
 use Atomicptr\Functional\Lst;
 use Carbon\Carbon;
 use DateTime;
@@ -37,7 +38,10 @@ class I18nController extends Controller
                     'commit' => $commit,
                     'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
                 ],
+                '__stats' => CrowdinStatsService::stats(),
             ];
+
+            CrowdinStatsService::stats();
 
             foreach (Language::values() as $lang) {
                 if (! array_key_exists($lang, $res)) {
