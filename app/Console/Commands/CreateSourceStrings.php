@@ -34,6 +34,8 @@ class CreateSourceStrings extends Command
             $this->updateOrInsert(Weapon::class, 'activeDescription', $weapon->id, $weapon->activeDescription);
 
             foreach ($weapon->talents ?? [] as $rowIndex => $row) {
+                $this->updateOrInsert(Weapon::class, "talent-{$rowIndex}-name", $weapon->id, $row['name']);
+
                 foreach ($row['options'] as $colIndex => $col) {
                     if ($col['type'] !== 'custom') {
                         continue;

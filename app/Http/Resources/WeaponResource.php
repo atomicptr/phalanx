@@ -62,7 +62,7 @@ class WeaponResource extends JsonResource
             }
 
             $res[$row] = [
-                'name' => TranslationService::i18n(Weapon::class, $this->id, "talentName_$row", $talents[$row]['name'] ?? null),
+                'name' => TranslationService::i18n(Weapon::class, $this->id, "talent-{$row}-name", $talents[$row]['name'] ?? null),
                 'options' => [],
             ];
 
