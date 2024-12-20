@@ -35,7 +35,7 @@ class LanternCoreResource extends JsonResource
 
         return [
             'title' => TranslationService::i18n(LanternCore::class, $this->id, $abilityIdent.'Title', $title),
-            'description' => TranslationService::i18n(LanternCore::class, $this->id, $abilityIdent.'Description', $description),
+            'description' => TranslationService::i18n(LanternCore::class, $this->id, $abilityIdent, $description),
             'values' => ValuesResource::make($values),
         ];
     }
