@@ -76,7 +76,6 @@ class WeaponResource extends JsonResource
                 }
 
                 $res[$row]['options'][$col] = [
-                    'name' => $options[$col]['name'] ?? null,
                     ...$this->parseTalentValue($options[$col], $row, $col),
                 ];
             }
@@ -90,7 +89,7 @@ class WeaponResource extends JsonResource
         return match (ValueType::from($value['type'])) {
             ValueType::CUSTOM => [
                 'type' => $value['type'],
-                'description' => TranslationService::i18n(Weapon::class, $this->id, "talentValue_{$row}_{$col}", $value['description'] ?? ''),
+                'description' => TranslationService::i18n(Weapon::class, $this->id, "talent-{$row}-{$col}-description", $value['description'] ?? ''),
                 'values' => ValuesResource::make($value['values']),
             ],
             ValueType::STAT => [
