@@ -34,7 +34,13 @@ class WeaponsController extends Controller
                 'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
             ];
 
-            return $items;
+            return [
+                '__meta' => [
+                    'commit' => $commit,
+                    'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
+                ],
+                'items' => $items,
+            ];
         });
     }
 }
