@@ -29,11 +29,6 @@ class WeaponsController extends Controller
         return Cache::remember($cacheKey, $cacheTime, function () use ($patch, $commit) {
             $items = CollectionConverter::toArray(WeaponResource::collection(Weapon::all()->filter(fn (HasPatch $m) => VersionUtil::compare($patch->name, $m->patch()->first()->name) >= 0)));
 
-            $items['__meta'] = [
-                'commit' => $commit,
-                'buildTime' => (new DateTime(timezone: new DateTimeZone('UTC')))->getTimestamp(),
-            ];
-
             return [
                 '__meta' => [
                     'commit' => $commit,
