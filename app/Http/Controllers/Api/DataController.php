@@ -13,6 +13,7 @@ use App\Models\LanternCore;
 use App\Models\Patch;
 use App\Models\Perk;
 use App\Models\Weapon;
+use App\Service\CollectionConverter;
 use App\Utils\VersionUtil;
 use Carbon\Carbon;
 use DateTime;
@@ -21,6 +22,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
+/** @deprecated */
 class DataController extends Controller
 {
     public function index()
@@ -51,14 +53,6 @@ class DataController extends Controller
 
     private function collectionToObject(ResourceCollection $collection): array
     {
-        $res = [];
-
-        foreach ($collection as $elem) {
-            assert($elem->id !== null);
-
-            $res[$elem->id] = $elem;
-        }
-
-        return $res;
+        return CollectionConverter::toArray($collection);
     }
 }
