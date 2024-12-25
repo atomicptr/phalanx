@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Contracts\HasPatch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Auditable as IsAuditable;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class LanternCore extends Model implements Auditable
+class LanternCore extends Model implements Auditable, HasPatch
 {
     use HasFactory;
     use IsAuditable;

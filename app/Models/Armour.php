@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\HasPatch;
 use App\Enums\ArmourType;
 use App\Enums\Element;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Auditable as IsAuditable;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Armour extends Model implements Auditable
+class Armour extends Model implements Auditable, HasPatch
 {
     use HasFactory;
     use IsAuditable;
