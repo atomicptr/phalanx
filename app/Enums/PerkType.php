@@ -19,22 +19,22 @@ enum PerkType: string implements DisplayAsString, HasIcon
     public function icon(): string
     {
         return match ($this) {
-            self::ALACRITY => asset('icons/alacrity.png'),
-            self::BRUTALITY => asset('icons/brutality.png'),
-            self::FINESSE => asset('icons/finesse.png'),
-            self::FORTITUDE => asset('icons/fortitude.png'),
-            self::INSIGHT => asset('icons/insight.png'),
+            self::ALACRITY => asset('icons/mobility.svg'),
+            self::BRUTALITY => asset('icons/power.svg'),
+            self::FINESSE => asset('icons/technique.svg'),
+            self::FORTITUDE => asset('icons/defense.svg'),
+            self::INSIGHT => asset('icons/utility.svg'),
         };
     }
 
     public function displayString(): string
     {
         return match ($this) {
-            self::ALACRITY => 'Alacrity',
-            self::BRUTALITY => 'Brutality',
-            self::FINESSE => 'Finesse',
-            self::FORTITUDE => 'Fortitude',
-            self::INSIGHT => 'Insight',
+            self::ALACRITY => 'Mobility',
+            self::BRUTALITY => 'Power',
+            self::FINESSE => 'Technique',
+            self::FORTITUDE => 'Defense',
+            self::INSIGHT => 'Utility',
         };
     }
 }
