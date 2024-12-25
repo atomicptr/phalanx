@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.4",
+        "php": "^8.3",
         "atomicptr/dauntless-builder-sdk": "^3.10",
         "atomicptr/functional": "^0",
         "atomicptr/laravel-github-storage": "^0.1.1",
