@@ -72,7 +72,7 @@
                 </li>
                 <li>
                     <a href="{{ route("admin.misc.perks")}}" class="{{ \App\Utils\RouteUtil::active("admin.misc.perks") }}" wire:navigate>
-                        <img src="{{ asset("icons/brutality.png") }}" class="w-6 h-6" />
+                        <img src="{{ asset("icons/prismatic.png") }}" class="w-6 h-6" />
                         {{ __("Perks") }}
                     </a>
                 </li>
